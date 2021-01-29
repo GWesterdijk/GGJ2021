@@ -26,6 +26,10 @@ public class Human : MonoBehaviour
     }
     public State CurrentState = State.Walking;
 
+    [SerializeField] private Transform playerRaycastTarget;
+    [SerializeField] private Transform raycastOrigin;
+    [SerializeField] private float sightFov = 0.5f;
+
     float timer = 0;
     [SerializeField] private RoomWaypoint currentRoom;
 
@@ -61,6 +65,33 @@ public class Human : MonoBehaviour
                 break;
             default:
                 break;
+        }
+
+        Ray ray = new Ray(raycastOrigin.position, (playerRaycastTarget.position - raycastOrigin.position).normalized); ;
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, 100f, ~(1 << 8))) //,  transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, LayerMask.NameToLayer("Default")))
+        {
+            if (hit.transform.tag == "Player")
+            {
+                float dot = Vector3.Dot(raycastOrigin.forward, (hit.point - raycastOrigin.position).normalized);
+                if (dot > sightFov)
+                {
+                    // Actually spot the player
+                    StartChasingCat();
+
+                    Debug.DrawRay(raycastOrigin.position, (hit.point - raycastOrigin.position), Color.green);
+                }
+                else
+                {
+                    Debug.DrawRay(raycastOrigin.position, (hit.point - raycastOrigin.position), Color.red);
+                }
+                Debug.Log("Hit Player");
+            }
+        }
+        else
+        {
+            Debug.DrawRay(raycastOrigin.position, (playerRaycastTarget.position - raycastOrigin.position), Color.white);
+            Debug.Log("Did not Hit");
         }
     }
 
@@ -99,6 +130,7 @@ public class Human : MonoBehaviour
     /// </summary>
     public void StartChasingCat()
     {
-
+        Debug.Log("LOSE GAME");
+        Application.Quit();
     }
 }
