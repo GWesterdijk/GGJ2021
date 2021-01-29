@@ -22,6 +22,7 @@ public class Human : MonoBehaviour
     {
         Walking,
         Searching,
+        Alert,
         Chasing
     }
     public State CurrentState = State.Walking;
@@ -31,7 +32,10 @@ public class Human : MonoBehaviour
     [SerializeField] private float sightFov = 0.5f;
 
     float timer = 0;
+    [SerializeField] private float alertTime = 4;
     [SerializeField] private RoomWaypoint currentRoom;
+    [SerializeField] private float catSpotTime = 2;
+    private float catSpotTimer = 0;
 
     private void Start()
     {
@@ -55,9 +59,32 @@ public class Human : MonoBehaviour
                 // Wait for certain time and find new waypoint
                 timer -= Time.deltaTime;
 
+                if (catSpotTimer > catSpotTime)
+                {
+                    StartChasingCat();
+                }
+
                 if (timer <= 0)
                 {
                     WalkToNewRoom();
+                }
+                break;
+            case State.Alert:
+                // Look for that darn cat in current spot for certain time
+                if (NavMeshAgent.remainingDistance < NavMeshAgent.stoppingDistance)
+                {
+                    NavMeshAgent.isStopped = true;
+                }
+
+                if (catSpotTimer > catSpotTime)
+                {
+                    StartChasingCat();
+                }
+
+                timer -= Time.deltaTime;
+                if (timer <= 0)
+                {
+                    ContinueOnPath();
                 }
                 break;
             case State.Chasing:
@@ -69,7 +96,7 @@ public class Human : MonoBehaviour
 
         Ray ray = new Ray(raycastOrigin.position, (playerRaycastTarget.position - raycastOrigin.position).normalized); ;
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 100f, ~(1 << 8))) //,  transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, LayerMask.NameToLayer("Default")))
+        if (Physics.Raycast(ray, out hit, 100f, ~(1 << 8)))
         {
             if (hit.transform.tag == "Player")
             {
@@ -77,7 +104,7 @@ public class Human : MonoBehaviour
                 if (dot > sightFov)
                 {
                     // Actually spot the player
-                    StartChasingCat();
+                    OnSpotCat();
 
                     Debug.DrawRay(raycastOrigin.position, (hit.point - raycastOrigin.position), Color.green);
                 }
@@ -85,13 +112,7 @@ public class Human : MonoBehaviour
                 {
                     Debug.DrawRay(raycastOrigin.position, (hit.point - raycastOrigin.position), Color.red);
                 }
-                Debug.Log("Hit Player");
             }
-        }
-        else
-        {
-            Debug.DrawRay(raycastOrigin.position, (playerRaycastTarget.position - raycastOrigin.position), Color.white);
-            Debug.Log("Did not Hit");
         }
     }
 
@@ -103,14 +124,55 @@ public class Human : MonoBehaviour
 
     }
 
+    public void OnSpotCat()
+    {
+        switch (CurrentState)
+        {
+            case State.Walking:
+                BecomeAlert();
+                break;
+            case State.Searching:
+                catSpotTimer += Time.deltaTime;
+                break;
+            case State.Alert:
+                catSpotTimer += Time.deltaTime;
+                break;
+            case State.Chasing:
+                break;
+            default:
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Starts alert state and sets timer
+    /// </summary>
+    public void BecomeAlert()
+    {
+        // TODO: trigger searching animation
+
+        NavMeshAgent.SetDestination(playerRaycastTarget.position);
+        timer = alertTime;
+        CurrentState = State.Alert;
+        catSpotTimer += Time.deltaTime;
+    }
+
     /// <summary>
     /// Gets a new waitpoint and starts navigating to it
     /// </summary>
     public void WalkToNewRoom()
     {
+        catSpotTimer = 0;
         currentRoom = RoomWaypoint.Waypoints[Random.Range(0, RoomWaypoint.Waypoints.Count)];
         NavMeshAgent.isStopped = false;
         NavMeshAgent.SetDestination(currentRoom.transform.position);
+        CurrentState = State.Walking;
+    }
+
+    public void ContinueOnPath()
+    {
+        timer = 0;
+        NavMeshAgent.isStopped = false;
         CurrentState = State.Walking;
     }
 
@@ -130,7 +192,9 @@ public class Human : MonoBehaviour
     /// </summary>
     public void StartChasingCat()
     {
+        catSpotTimer = 0;
         Debug.Log("LOSE GAME");
+        Debug.Break();
         Application.Quit();
     }
 }
