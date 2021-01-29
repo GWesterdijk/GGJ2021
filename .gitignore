@@ -1,0 +1,89 @@
+# RCRS REPO GIT IGNORE SETTINGS #
+
+# =============== #
+# Unity generated #
+# =============== #
+Temp/
+Obj/
+Build/
+Logs/
+Library/
+Library/metadata/
+Library/ShaderCache/
+Library/ScriptAssemblies/
+UnityGenerated/
+
+/Temp/
+/Obj/
+/Build/
+/Library/
+/Library/metadata/
+/Library/ShaderCache/
+/Library/ScriptAssemblies/
+/UnityGenerated/
+
+Assets/FMODStudioCache.asset
+Assets/StreamingAssets/*.bank
+fmod.log
+fmod_editor.log
+sysinfo.txt
+
+# ===================================== #
+# Visual Studio / MonoDevelop generated #
+# ===================================== #
+ExportedObj/
+.vs/
+*.svd
+*.userprefs
+*.csproj
+*.pidb
+*.suo
+​*.sln
+?*.sln
+*.user
+*.unityproj
+*.booproj
+*.dropbox
+*.sbk.*
+
+# ============ #
+# OS generated #
+# ============ #
+.DS_Store*
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+
+Library/shadercompiler-32bit-1.log
+Library/shadercompiler-64bit-1.log
+Builds/
+ArtSources/
+_gsdata_/
+Assets/Gaia/Stamps*
+Screenshots/*
+*.alg_meta
+
+Assets/StreamingAsset*
+Assets/Scripts/Editor/VertexSnap*
+Assets/unity-ui-extensions*
+Assets/ProCore*
+
+# Maya
+*.swatch
+/ProjectSettings/Packages/com.unity.probuilder/Settings.json
+
+# Rider IDE
+.idea/*
+Assets/Plugins/Editor/JetBrains/*
+Assets/Plugins/Editor/JetBrains.meta
+
+# FMOD files
+Assets/Plugins/FMOD/Resources/FMODStudioCache.asset
+Assets/StreamingAssets/*.bank
+fmod_editor.log
+FMOD Project/Project Spire/.cache/
+FMOD Project/Project Spire/.user/
+Project Spire/Assets/Export/
