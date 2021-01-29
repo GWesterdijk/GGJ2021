@@ -22,10 +22,10 @@ public class line_of_sight : MonoBehaviour
                 is_insight = true;
                     Debug.Log("True");
                 }
-            else
-            {
+                else
+                {
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 1000, Color.white);
-            }
+                 }
             }
         
     }
