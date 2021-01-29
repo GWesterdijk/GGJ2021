@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
         
     }
 
-    private Vector2 input;
+    private Vector3 input;
     private bool willJump = false;
     private bool canJump = false;
     [SerializeField] private float jumpInputTime = 0.2f;
@@ -47,18 +47,22 @@ public class Player : MonoBehaviour
     [SerializeField] private float jumpSpeed;
     Vector3 velocity;
 
+    [SerializeField] private Transform playerCamera;
+
     // Update is called once per frame
     void FixedUpdate()
     {
         input.x = Input.GetAxis("Horizontal");
-        input.y = Input.GetAxis("Vertical");
+        input.z = Input.GetAxis("Vertical");
+
+        input = Quaternion.AngleAxis(playerCamera.rotation.eulerAngles.y, Vector3.up) * input;
 
         Vector2 temp = new Vector2(velocity.x, velocity.z);
 
         //Rigidbody.AddForce(input * movementSpeed, ForceMode.Force);
         if (input.magnitude > 0)
         {
-            temp += input * movementSpeed * Time.deltaTime;
+            temp += new Vector2(input.x, input.z) * movementSpeed * Time.deltaTime;
         }
         else if (velocity.magnitude > 0)
         {

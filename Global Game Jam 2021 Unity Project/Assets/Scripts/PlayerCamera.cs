@@ -9,6 +9,9 @@ public class PlayerCamera : MonoBehaviour
 
     private Vector3 offset;
 
+    private Vector3 rotationOffset = Vector3.zero;
+    [SerializeField] private 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +21,10 @@ public class PlayerCamera : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        transform.position = target.position + offset;
+        rotationOffset.y += Input.GetAxis("Mouse X");
+        rotationOffset.x -= Input.GetAxis("Mouse Y");
+
+        transform.position = target.position + Quaternion.Euler(rotationOffset) * offset;
         LookAtTarget();
     }
 
