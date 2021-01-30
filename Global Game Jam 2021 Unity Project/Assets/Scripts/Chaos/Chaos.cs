@@ -5,6 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class Chaos : MonoBehaviour
 {
+    private AudioSource _audioSource;
+    public AudioSource AudioSource
+    {
+        get
+        {
+            if (_audioSource == null)
+                TryGetComponent(out _audioSource);
+
+            return _audioSource;
+        }
+    }
+
     public static List<Chaos> uncompletedChaos = new List<Chaos>();
     public static float TotalChaosScore = 0;
 
@@ -53,5 +65,8 @@ public class Chaos : MonoBehaviour
         {
             Human.instance.TriggerHearingCat(transform.position);
         }
+        AudioSource.loop = false;
+        AudioSource.spatialBlend = 1;
+        AudioSource.Play();
     }
 }
