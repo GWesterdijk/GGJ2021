@@ -6,6 +6,8 @@ public class Chaos : MonoBehaviour
 {
     public static List<Chaos> uncompletedChaos = new List<Chaos>();
 
+    public List<Chaos> duplicateChaosObjectives = new List<Chaos>();
+    
     public virtual void OnEnable()
     {
         uncompletedChaos.Add(this);
@@ -36,5 +38,9 @@ public class Chaos : MonoBehaviour
         Debug.Log("Did Chaos + Score: " + ChaosScore, transform);
 
         enabled = false;
+        foreach (var chaosObjective in duplicateChaosObjectives)
+        {
+            chaosObjective.enabled = false;
+        }
     }
 }

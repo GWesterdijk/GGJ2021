@@ -28,6 +28,8 @@ public class ChaosUI : MonoBehaviour
 
     public void ShowEarnedChaos(string title, int score)
     {
+        Debug.Log("Showing earned chaos");
+
         titleText.text = title;
         scoreText.text = scoreTextPrefix + score + scoreTextPostfix;
 
