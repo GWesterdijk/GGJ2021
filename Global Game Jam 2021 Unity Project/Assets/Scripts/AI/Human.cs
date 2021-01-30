@@ -38,6 +38,7 @@ public class Human : MonoBehaviour
     [SerializeField] private RoomWaypoint currentRoom;
     [SerializeField] private float catSpotTime = 2;
     private float catSpotTimer = 0;
+    [SerializeField] private float reactionTime = 1;
 
     private void Start()
     {
@@ -52,7 +53,7 @@ public class Human : MonoBehaviour
         {
             case State.Walking:
                 // Walk toward selected waypoint
-                if (NavMeshAgent.remainingDistance < NavMeshAgent.stoppingDistance)
+                if (NavMeshAgent.remainingDistance < NavMeshAgent.stoppingDistance && delayedSetDestinationRoutine == null)
                 {
                     StartSearhingForCat();
                 }
@@ -73,7 +74,7 @@ public class Human : MonoBehaviour
                 break;
             case State.Alert:
                 // Look for that darn cat in current spot for certain time
-                if (NavMeshAgent.remainingDistance < NavMeshAgent.stoppingDistance)
+                if (NavMeshAgent.remainingDistance < NavMeshAgent.stoppingDistance && delayedSetDestinationRoutine == null)
                 {
                     NavMeshAgent.isStopped = true;
                 }
@@ -83,7 +84,7 @@ public class Human : MonoBehaviour
                     StartChasingCat();
                 }
 
-                if (NavMeshAgent.isStopped)
+                if (NavMeshAgent.isStopped && delayedSetDestinationRoutine == null)
                 {
                     timer -= Time.deltaTime;
                     if (timer <= 0)
@@ -143,7 +144,8 @@ public class Human : MonoBehaviour
                 //catSpotTimer += Time.deltaTime;
                 break;
             case State.Alert:
-                catSpotTimer += Time.deltaTime;
+                BecomeAlert();
+                //catSpotTimer += Time.deltaTime;
                 break;
             case State.Chasing:
                 break;
@@ -160,7 +162,10 @@ public class Human : MonoBehaviour
         // TODO: trigger searching animation
 
         SubtitleUI.instance.ShowSubtitle(subtitleName, "Is that you over there?", 3f);
-        NavMeshAgent.SetDestination(playerRaycastTarget.position);
+        //NavMeshAgent.SetDestination(playerRaycastTarget.position);
+        NavMeshAgent.isStopped = true;
+        delayedSetDestinationRoutine = StartCoroutine(DelayedSetDestination(playerRaycastTarget.position, reactionTime));
+
         timer = alertTime;
         CurrentState = State.Alert;
         catSpotTimer += Time.deltaTime;
@@ -214,5 +219,17 @@ public class Human : MonoBehaviour
         Debug.Log("LOSE GAME");
         Debug.Break();
         Application.Quit();
+    }
+
+    private Coroutine delayedSetDestinationRoutine = null;
+    private IEnumerator DelayedSetDestination(Vector3 target, float time)
+    {
+        Debug.Log("Started delayed set dest");
+        yield return new WaitForSeconds(time);
+
+        Debug.Log("FINISHED delayed set dest");
+        NavMeshAgent.isStopped = false;
+        NavMeshAgent.SetDestination(target);
+        delayedSetDestinationRoutine = null;
     }
 }
