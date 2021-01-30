@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Sirenix.OdinInspector;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -16,6 +17,8 @@ public class Human : MonoBehaviour
             Destroy(this);
     }
 
+    [SerializeField] private GameObject gameOverUI;
+    [SerializeField] public bool IsGameOver = false;
 
     private NavMeshAgent _navMeshAgent;
     public NavMeshAgent NavMeshAgent
@@ -372,10 +375,14 @@ public class Human : MonoBehaviour
         return result;
     }
 
+    [Button(25)]
     public void LoseGame()
     {
+        gameOverUI.SetActive(true);
+        IsGameOver = true;
+
         Debug.Log("LOSE GAME");
-        Debug.Break();
-        Application.Quit();
+        //Debug.Break();
+        //Application.Quit();
     }
 }

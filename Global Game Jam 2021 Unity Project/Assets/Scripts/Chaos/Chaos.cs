@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Chaos : MonoBehaviour
 {
@@ -21,9 +22,12 @@ public class Chaos : MonoBehaviour
 
         if (uncompletedChaos.Count <= 0)
         {
-            Debug.Log("Completed all chaos objectives");
-            Debug.Log("YOU WIN");
-            Debug.Break();
+            if (Human.instance.IsGameOver == false)
+            {
+                Debug.Log("Completed all chaos objectives");
+                Debug.Log("YOU WIN");
+                Debug.Break();
+            }
         }
     }
 
