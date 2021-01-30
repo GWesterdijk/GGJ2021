@@ -35,6 +35,8 @@ public class Player : MonoBehaviour
         
     }
 
+    [SerializeField] private Transform playerModel;
+
     private Vector3 input;
     private bool willJump = false;
     private bool canJump = false;
@@ -95,9 +97,17 @@ public class Player : MonoBehaviour
             willJump = false;
         }
 
-
         //Rigidbody.velocity = velocity;
         CharacterController.Move(velocity * Time.deltaTime);
+    }
+
+    private void LateUpdate()
+    {
+        // Rotate model
+        if (CharacterController.velocity.magnitude > 0.1f)
+            playerModel.rotation = Quaternion.LookRotation(velocity.normalized, Vector3.up);
+        if (CharacterController.isGrounded)
+            playerModel.rotation = Quaternion.Euler(0, playerModel.rotation.eulerAngles.y, playerModel.rotation.eulerAngles.z);
     }
 
     private void OnCollisionEnter(Collision collision)
