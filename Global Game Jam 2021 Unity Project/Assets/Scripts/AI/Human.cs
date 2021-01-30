@@ -75,6 +75,8 @@ public class Human : MonoBehaviour
         switch (CurrentState)
         {
             case State.Walking:
+                NavMeshAgent.speed = walkingSpeed;
+
                 // Walk toward selected waypoint
                 if (NavMeshAgent.remainingDistance < NavMeshAgent.stoppingDistance && delayedSetDestinationRoutine == null)
                 {
@@ -82,6 +84,8 @@ public class Human : MonoBehaviour
                 }
                 break;
             case State.Searching:
+                NavMeshAgent.speed = walkingSpeed;
+
                 // Wait for certain time and find new waypoint
                 timer -= Time.deltaTime;
 
@@ -96,6 +100,8 @@ public class Human : MonoBehaviour
                 }
                 break;
             case State.Alert:
+                NavMeshAgent.speed = runningSpeed;
+
                 // Look for that darn cat in current spot for certain time
                 if (NavMeshAgent.remainingDistance < NavMeshAgent.stoppingDistance && delayedSetDestinationRoutine == null)
                 {
@@ -117,6 +123,8 @@ public class Human : MonoBehaviour
                 }
                 break;
             case State.Chasing:
+                NavMeshAgent.speed = runningSpeed;
+
                 // Chase that darn cat
                 if (NavMeshAgent.remainingDistance < NavMeshAgent.stoppingDistance && delayedSetDestinationRoutine == null)
                 {
@@ -145,7 +153,7 @@ public class Human : MonoBehaviour
             if (hit.transform.tag == "Player")
             {
                 float dot = Vector3.Dot(raycastOrigin.forward, (hit.point - raycastOrigin.position).normalized);
-                if (dot > sightFov || CurrentState == State.Chasing)
+                if (dot > sightFov || CurrentState == State.Chasing || CurrentState == State.Alert)
                 {
                     // Actually spot the player
                     OnSpotCat();
