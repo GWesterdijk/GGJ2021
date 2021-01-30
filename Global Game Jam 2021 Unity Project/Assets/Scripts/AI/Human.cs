@@ -106,13 +106,15 @@ public class Human : MonoBehaviour
                     // Actually spot the player
                     OnSpotCat();
 
-                    Debug.DrawRay(raycastOrigin.position, (hit.point - raycastOrigin.position), Color.green);
+                    Debug.DrawRay(raycastOrigin.position, (hit.point - raycastOrigin.position), Color.red);
                 }
                 else
                 {
-                    Debug.DrawRay(raycastOrigin.position, (hit.point - raycastOrigin.position), Color.red);
+                    Debug.DrawRay(raycastOrigin.position, (hit.point - raycastOrigin.position), new Color(1.0f, 0.64f, 0.0f));
                 }
             }
+            else
+                Debug.DrawRay(raycastOrigin.position, playerRaycastTarget.position - raycastOrigin.position, Color.green);
         }
     }
 
