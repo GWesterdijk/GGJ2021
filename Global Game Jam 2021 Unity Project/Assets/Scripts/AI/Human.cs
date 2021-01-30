@@ -98,7 +98,6 @@ public class Human : MonoBehaviour
                     NavMeshAgent.isStopped = true;
                 }
 
-                catSpotTimer += Time.deltaTime;
                 if (catSpotTimer > catSpotTime)
                 {
                     StartChasingCat();
@@ -156,8 +155,16 @@ public class Human : MonoBehaviour
                         (hit.point - (CurrentState == State.Chasing ? transform.position + Vector3.up * NavMeshAgent.height : raycastOrigin.position)), new Color(1.0f, 0.64f, 0.0f));
                     if (CurrentState == State.Chasing && NavMeshAgent.remainingDistance < NavMeshAgent.stoppingDistance)
                     {
-                        ContinueOnPath();
-//                        BecomeAlert(true);
+
+                        //NavMeshAgent.speed = walkingSpeed;
+                        timer = alertTime;
+                        CurrentState = State.Alert;
+                        catSpotTimer += Time.deltaTime;
+
+                        NavMeshAgent.SetDestination(GetPlayerPosition());
+
+                        //ContinueOnPath();
+                        //BecomeAlert(true);
                     }
                 }
             }
@@ -167,7 +174,15 @@ public class Human : MonoBehaviour
                     playerRaycastTarget.position - (CurrentState == State.Chasing ? transform.position + Vector3.up * NavMeshAgent.height : raycastOrigin.position), Color.green);
                 if (CurrentState == State.Chasing && NavMeshAgent.remainingDistance < NavMeshAgent.stoppingDistance)
                 {
-                    ContinueOnPath();
+                    //NavMeshAgent.speed = walkingSpeed;
+                    timer = alertTime;
+                    CurrentState = State.Alert;
+                    catSpotTimer += Time.deltaTime;
+
+                    //NavMeshAgent.SetDestination(GetPlayerPosition());
+                    NavMeshAgent.destination = GetPlayerPosition();
+
+                    //ContinueOnPath();
                     //BecomeAlert(true);
                 }
             }
@@ -229,19 +244,27 @@ public class Human : MonoBehaviour
     {
         // TODO: trigger searching animation
 
-        if (!skipSubtitle)
-            SubtitleUI.instance.ShowSubtitle(subtitleName, "Is that you over there?", 3f);
+        //if (!skipSubtitle)
+        //    SubtitleUI.instance.ShowSubtitle(subtitleName, "Is that you over there?", 3f);
+
         //NavMeshAgent.SetDestination(playerRaycastTarget.position);
         if (CurrentState != State.Alert || CurrentState != State.Chasing)
         {
             NavMeshAgent.isStopped = true;
             delayedSetDestinationRoutine = StartCoroutine(DelayedSetDestination(position, reactionTime));
         }
+        else if (delayedSetDestinationRoutine == null)
+        {
+            //NavMeshAgent.SetDestination(GetPlayerPosition());
+            NavMeshAgent.destination = (GetPlayerPosition());
+        }
 
         //NavMeshAgent.speed = walkingSpeed;
         timer = alertTime;
         CurrentState = State.Alert;
-        catSpotTimer += Time.deltaTime;
+        catSpotTimer += Time.deltaTime; // *
+            //Mathf.Clamp01(Vector3.Dot(transform.forward, ((playerRaycastTarget.position - transform.position).normalized)) *
+            //Mathf.Clamp(1 - Vector3.Distance(transform.position, playerRaycastTarget.position), 0.5f, 5));
     }
 
     /// <summary>
@@ -254,7 +277,8 @@ public class Human : MonoBehaviour
         NavMeshAgent.isStopped = false;
         if (!skipSubtitle)
             SubtitleUI.instance.ShowSubtitle(subtitleName, "Maybe somewhere else in the house", 3f);
-        NavMeshAgent.SetDestination(currentRoom.transform.position);
+        //NavMeshAgent.SetDestination(currentRoom.transform.position);
+        NavMeshAgent.destination = currentRoom.transform.position;
         CurrentState = State.Walking;
         NavMeshAgent.speed = walkingSpeed;
     }
@@ -265,7 +289,8 @@ public class Human : MonoBehaviour
 
         timer = 0;
         NavMeshAgent.isStopped = false;
-        NavMeshAgent.SetDestination(currentRoom.transform.position);
+        //NavMeshAgent.SetDestination(currentRoom.transform.position);
+        NavMeshAgent.destination = currentRoom.transform.position;
         CurrentState = State.Walking;
         NavMeshAgent.speed = walkingSpeed;
     }
@@ -300,7 +325,11 @@ public class Human : MonoBehaviour
 
         CurrentState = State.Chasing;
         NavMeshAgent.isStopped = false;
-        NavMeshAgent.SetDestination(GetPlayerPosition());
+        if (delayedSetDestinationRoutine != null)
+        {
+            StopCoroutine(delayedSetDestinationRoutine);
+        }
+        NavMeshAgent.destination = GetPlayerPosition();
         NavMeshAgent.speed = runningSpeed;
     }
 
@@ -310,15 +339,16 @@ public class Human : MonoBehaviour
         yield return new WaitForSeconds(time);
 
         NavMeshAgent.isStopped = false;
-        NavMeshAgent.SetDestination(target);
+        //NavMeshAgent.SetDestination(target);
+        NavMeshAgent.destination = target;
         delayedSetDestinationRoutine = null;
     }
 
-    public void OnTriggerEnter(Collider other)
+    public void OnTriggerStay(Collider other)
     {
         if (other.transform.tag == "Player")
         {
-            if (CurrentState == State.Chasing) //|| CurrentState == State.Alert)
+            if (CurrentState == State.Chasing || CurrentState == State.Alert)
             {
                 LoseGame();
             }
