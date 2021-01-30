@@ -43,10 +43,10 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2.5
-  m_Acceleration: 1
+  m_Speed: 2
+  m_Acceleration: 2
   avoidancePriority: 50
-  m_AngularSpeed: 75
+  m_AngularSpeed: 125
   m_StoppingDistance: 0.1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -67,11 +67,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff9776a0afbef004bb17a5b39352b714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  subtitleName: Stefan de Kattenwasser
   CurrentState: 0
   playerRaycastTarget: {fileID: 0}
   raycastOrigin: {fileID: 3817064746112367129}
   sightFov: 0.5
+  alertTime: 4
   currentRoom: {fileID: 0}
+  catSpotTime: 2
 --- !u!1001 &3817064746112753823
 PrefabInstance:
   m_ObjectHideFlags: 0

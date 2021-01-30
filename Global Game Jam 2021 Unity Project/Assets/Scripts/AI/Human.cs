@@ -18,6 +18,8 @@ public class Human : MonoBehaviour
         }
     }
 
+    [SerializeField] string subtitleName = "Stefan de Kattenwasser";
+
     public enum State
     {
         Walking,
@@ -81,10 +83,13 @@ public class Human : MonoBehaviour
                     StartChasingCat();
                 }
 
-                timer -= Time.deltaTime;
-                if (timer <= 0)
+                if (NavMeshAgent.isStopped)
                 {
-                    ContinueOnPath();
+                    timer -= Time.deltaTime;
+                    if (timer <= 0)
+                    {
+                        ContinueOnPath();
+                    }
                 }
                 break;
             case State.Chasing:
@@ -123,7 +128,7 @@ public class Human : MonoBehaviour
     /// </summary>
     public void TriggerHearingCat()
     {
-
+        BecomeAlert();
     }
 
     public void OnSpotCat()
@@ -134,7 +139,8 @@ public class Human : MonoBehaviour
                 BecomeAlert();
                 break;
             case State.Searching:
-                catSpotTimer += Time.deltaTime;
+                BecomeAlert();
+                //catSpotTimer += Time.deltaTime;
                 break;
             case State.Alert:
                 catSpotTimer += Time.deltaTime;
@@ -153,6 +159,7 @@ public class Human : MonoBehaviour
     {
         // TODO: trigger searching animation
 
+        SubtitleUI.instance.ShowSubtitle(subtitleName, "Is that you over there?", 3f);
         NavMeshAgent.SetDestination(playerRaycastTarget.position);
         timer = alertTime;
         CurrentState = State.Alert;
@@ -167,14 +174,18 @@ public class Human : MonoBehaviour
         catSpotTimer = 0;
         currentRoom = RoomWaypoint.Waypoints[Random.Range(0, RoomWaypoint.Waypoints.Count)];
         NavMeshAgent.isStopped = false;
+        SubtitleUI.instance.ShowSubtitle(subtitleName, "Maybe somewhere else in the house", 3f);
         NavMeshAgent.SetDestination(currentRoom.transform.position);
         CurrentState = State.Walking;
     }
 
     public void ContinueOnPath()
     {
+        SubtitleUI.instance.ShowSubtitle(subtitleName, "Huh, must have been the wind", 3f);
+
         timer = 0;
         NavMeshAgent.isStopped = false;
+        NavMeshAgent.SetDestination(currentRoom.transform.position);
         CurrentState = State.Walking;
     }
 
@@ -184,6 +195,8 @@ public class Human : MonoBehaviour
     public void StartSearhingForCat()
     {
         NavMeshAgent.isStopped = true;
+
+        SubtitleUI.instance.ShowSubtitle(subtitleName, "Hmm must be here somewhere", 3f);
         // TODO: Play searching animation
         timer = currentRoom.WaitTime;
         CurrentState = State.Searching;
@@ -195,6 +208,9 @@ public class Human : MonoBehaviour
     public void StartChasingCat()
     {
         catSpotTimer = 0;
+
+        SubtitleUI.instance.ShowSubtitle(subtitleName, "I've got you now!", 3f);
+
         Debug.Log("LOSE GAME");
         Debug.Break();
         Application.Quit();
