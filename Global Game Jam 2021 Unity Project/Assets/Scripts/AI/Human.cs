@@ -6,6 +6,17 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class Human : MonoBehaviour
 {
+    public static Human instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(this);
+    }
+
+
     private NavMeshAgent _navMeshAgent;
     public NavMeshAgent NavMeshAgent
     {
@@ -128,9 +139,10 @@ public class Human : MonoBehaviour
     /// <summary>
     /// Makes the human run to the room the cat is in
     /// </summary>
-    public void TriggerHearingCat()
+    public void TriggerHearingCat(Vector3 position)
     {
-        BecomeAlert();
+        BecomeAlert(true, position);
+        SubtitleUI.instance.ShowSubtitle(subtitleName, "Hey! What was that?");
     }
 
     public void OnSpotCat()
@@ -158,14 +170,31 @@ public class Human : MonoBehaviour
     /// <summary>
     /// Starts alert state and sets timer
     /// </summary>
-    public void BecomeAlert()
+    public void BecomeAlert(bool skipSubtitle = false)
+    {
+        BecomeAlert(skipSubtitle, playerRaycastTarget.position);
+
+        // TODO: trigger searching animation
+
+        //if (!skipSubtitle)
+        //    SubtitleUI.instance.ShowSubtitle(subtitleName, "Is that you over there?", 3f);
+        ////NavMeshAgent.SetDestination(playerRaycastTarget.position);
+        //NavMeshAgent.isStopped = true;
+        //delayedSetDestinationRoutine = StartCoroutine(DelayedSetDestination(playerRaycastTarget.position, reactionTime));
+
+        //timer = alertTime;
+        //CurrentState = State.Alert;
+        //catSpotTimer += Time.deltaTime;
+    }
+    public void BecomeAlert(bool skipSubtitle, Vector3 position)
     {
         // TODO: trigger searching animation
 
-        SubtitleUI.instance.ShowSubtitle(subtitleName, "Is that you over there?", 3f);
+        if (!skipSubtitle)
+            SubtitleUI.instance.ShowSubtitle(subtitleName, "Is that you over there?", 3f);
         //NavMeshAgent.SetDestination(playerRaycastTarget.position);
         NavMeshAgent.isStopped = true;
-        delayedSetDestinationRoutine = StartCoroutine(DelayedSetDestination(playerRaycastTarget.position, reactionTime));
+        delayedSetDestinationRoutine = StartCoroutine(DelayedSetDestination(position, reactionTime));
 
         timer = alertTime;
         CurrentState = State.Alert;

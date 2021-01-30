@@ -6,8 +6,10 @@ public class Chaos : MonoBehaviour
 {
     public static List<Chaos> uncompletedChaos = new List<Chaos>();
 
+    public bool alertsPlayer = true;
     public List<Chaos> duplicateChaosObjectives = new List<Chaos>();
     
+
     public virtual void OnEnable()
     {
         uncompletedChaos.Add(this);
@@ -40,6 +42,11 @@ public class Chaos : MonoBehaviour
         foreach (var chaosObjective in duplicateChaosObjectives)
         {
             chaosObjective.enabled = false;
+        }
+
+        if (alertsPlayer)
+        {
+            Human.instance.TriggerHearingCat(transform.position);
         }
     }
 }
