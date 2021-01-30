@@ -57,6 +57,7 @@ public class Player : MonoBehaviour
 
     private Vector3 input;
     private bool willJump = false;
+    private bool canJump = false;
     [SerializeField] private float jumpInputTime = 0.2f;
     private float _jumpInputTimer;
     [SerializeField] private float movementSpeed;
@@ -69,8 +70,9 @@ public class Player : MonoBehaviour
 
     [SerializeField] private Transform playerCamera;
 
+
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         input.x = Input.GetAxis("Horizontal");
         input.z = Input.GetAxis("Vertical");
