@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(Collider)),
+    RequireComponent(typeof(Rigidbody))]
 public class GroundFall : Chaos
 {
     [SerializeField] private List<string> collisionTags = new List<string>() { "Floor" };
