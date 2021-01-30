@@ -1,6 +1,7 @@
 ﻿using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -18,7 +19,10 @@ public class Human : MonoBehaviour
     }
 
     [SerializeField] private GameObject gameOverUI;
+
+    [SerializeField] private TMP_Text gameOverUIScore;
     [SerializeField] private GameObject winGameUI;
+    [SerializeField] private TMP_Text winGameUIScore;
     [HideInInspector] public bool IsGameOver = false;
 
     private NavMeshAgent _navMeshAgent;
@@ -388,6 +392,7 @@ public class Human : MonoBehaviour
     public void LoseGame()
     {
         gameOverUI.SetActive(true);
+        gameOverUIScore.text = "Score: " + Chaos.TotalChaosScore;
         IsGameOver = true;
 
         Debug.Log("LOSE GAME");
@@ -399,6 +404,7 @@ public class Human : MonoBehaviour
     public void WinGame()
     {
         winGameUI.SetActive(true);
+        winGameUIScore.text = "Score: " + Chaos.TotalChaosScore;
         IsGameOver = true;
 
         Debug.Log("WIN GAME");

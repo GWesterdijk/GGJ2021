@@ -9,6 +9,7 @@ public class RestartScreen : MonoBehaviour
     private void OnEnable()
     {
         SubtitleUI.instance.gameObject.SetActive(false);
+        ChaosUI.instance.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
