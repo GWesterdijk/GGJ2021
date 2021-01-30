@@ -29,10 +29,28 @@ public class Player : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private bool isGrounded
     {
-        
+        get
+        {
+            if (CharacterController.isGrounded)
+                return true;
+
+            // Bit shift the index of the layer (8) to get a bit mask
+            int layerMask = 1 << 8;
+
+            // This would cast rays only against colliders in layer 8.
+            // But instead we want to collide against everything except layer 8. The ~ operator does this, it inverts a bitmask.
+            layerMask = ~layerMask;
+
+            RaycastHit hit;
+            // Does the ray intersect any objects excluding the player layer
+            if (Physics.SphereCast(transform.position + Vector3.up * 0.1f, 0.1f, -transform.up, out hit, 0.15f, layerMask))
+            {
+                return true;
+            }
+            return false;
+        }
     }
 
     [SerializeField] private Transform playerModel;
@@ -97,10 +115,10 @@ public class Player : MonoBehaviour
 
         //Gravity
         velocity.y -= gravity * Time.deltaTime;
-        if (CharacterController.isGrounded)
+        if (isGrounded)
             velocity.y = 0;
 
-        if (willJump && CharacterController.isGrounded)
+        if (willJump && isGrounded)
         {
             Jump();
             willJump = false;
@@ -115,7 +133,7 @@ public class Player : MonoBehaviour
         // Rotate model
         if (CharacterController.velocity.magnitude > 0.1f)
             playerModel.rotation = Quaternion.LookRotation(velocity.normalized, Vector3.up);
-        if (CharacterController.isGrounded)
+        if (isGrounded)
             playerModel.rotation = Quaternion.Euler(0, playerModel.rotation.eulerAngles.y, playerModel.rotation.eulerAngles.z);
     }
 
