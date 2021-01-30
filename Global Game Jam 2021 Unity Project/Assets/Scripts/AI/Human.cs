@@ -49,6 +49,7 @@ public class Human : MonoBehaviour
 
     float timer = 0;
     [SerializeField] private float alertTime = 4;
+    [SerializeField] private float unreachableLoseGameTime = 2;
     [SerializeField] private RoomWaypoint currentRoom;
     [SerializeField] private float catSpotTime = 2;
     private float catSpotTimer = 0;
@@ -64,6 +65,9 @@ public class Human : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Ray ray;
+        RaycastHit hit;
+
         switch (CurrentState)
         {
             case State.Walking:
@@ -94,6 +98,7 @@ public class Human : MonoBehaviour
                     NavMeshAgent.isStopped = true;
                 }
 
+                catSpotTimer += Time.deltaTime;
                 if (catSpotTimer > catSpotTime)
                 {
                     StartChasingCat();
@@ -110,44 +115,60 @@ public class Human : MonoBehaviour
                 break;
             case State.Chasing:
                 // Chase that darn cat
-                if (NavMeshAgent.remainingDistance < NavMeshAgent.stoppingDistance)
+                if (NavMeshAgent.remainingDistance < NavMeshAgent.stoppingDistance && delayedSetDestinationRoutine == null)
                 {
-                    LoseGame();
+                    //LoseGame();
+                    ray = new Ray(transform.position + Vector3.up * NavMeshAgent.height, (playerRaycastTarget.position - (transform.position + Vector3.up * NavMeshAgent.height)).normalized);
+                    if (Physics.Raycast(ray, out hit, 100f, ~(1 << 8)))
+                    {
+                        if (hit.transform.tag == "Player")
+                        {
+                            timer += Time.deltaTime;
+                            if (timer > unreachableLoseGameTime)
+                                LoseGame();
+                        }
+                    }
                 }
                 break;
             default:
                 break;
         }
 
-        Ray ray = new Ray(raycastOrigin.position, (playerRaycastTarget.position - raycastOrigin.position).normalized); ;
-        RaycastHit hit;
+        ray = new Ray(CurrentState == State.Chasing ? transform.position + Vector3.up * NavMeshAgent.height : raycastOrigin.position,
+            (playerRaycastTarget.position - (CurrentState == State.Chasing ? transform.position + Vector3.up * NavMeshAgent.height : raycastOrigin.position)).normalized);
+        //RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 100f, ~(1 << 8)))
         {
             if (hit.transform.tag == "Player")
             {
                 float dot = Vector3.Dot(raycastOrigin.forward, (hit.point - raycastOrigin.position).normalized);
-                if (dot > sightFov)
+                if (dot > sightFov || CurrentState == State.Chasing)
                 {
                     // Actually spot the player
                     OnSpotCat();
 
-                    Debug.DrawRay(raycastOrigin.position, (hit.point - raycastOrigin.position), Color.red);
+                    Debug.DrawRay(CurrentState == State.Chasing ? transform.position + Vector3.up * NavMeshAgent.height : raycastOrigin.position, 
+                        (hit.point - (CurrentState == State.Chasing ? transform.position + Vector3.up * NavMeshAgent.height : raycastOrigin.position)), Color.red);
                 }
                 else
                 {
-                    Debug.DrawRay(raycastOrigin.position, (hit.point - raycastOrigin.position), new Color(1.0f, 0.64f, 0.0f));
-                    if (CurrentState == State.Chasing)
+                    Debug.DrawRay(CurrentState == State.Chasing ? transform.position + Vector3.up * NavMeshAgent.height : raycastOrigin.position, 
+                        (hit.point - (CurrentState == State.Chasing ? transform.position + Vector3.up * NavMeshAgent.height : raycastOrigin.position)), new Color(1.0f, 0.64f, 0.0f));
+                    if (CurrentState == State.Chasing && NavMeshAgent.remainingDistance < NavMeshAgent.stoppingDistance)
                     {
-                        BecomeAlert(true);
+                        ContinueOnPath();
+//                        BecomeAlert(true);
                     }
                 }
             }
             else
             {
-                Debug.DrawRay(raycastOrigin.position, playerRaycastTarget.position - raycastOrigin.position, Color.green);
-                if (CurrentState == State.Chasing)
+                Debug.DrawRay(CurrentState == State.Chasing ? transform.position + Vector3.up * NavMeshAgent.height : raycastOrigin.position,
+                    playerRaycastTarget.position - (CurrentState == State.Chasing ? transform.position + Vector3.up * NavMeshAgent.height : raycastOrigin.position), Color.green);
+                if (CurrentState == State.Chasing && NavMeshAgent.remainingDistance < NavMeshAgent.stoppingDistance)
                 {
-                    BecomeAlert(true);
+                    ContinueOnPath();
+                    //BecomeAlert(true);
                 }
             }
         }
@@ -211,8 +232,11 @@ public class Human : MonoBehaviour
         if (!skipSubtitle)
             SubtitleUI.instance.ShowSubtitle(subtitleName, "Is that you over there?", 3f);
         //NavMeshAgent.SetDestination(playerRaycastTarget.position);
-        NavMeshAgent.isStopped = true;
-        delayedSetDestinationRoutine = StartCoroutine(DelayedSetDestination(position, reactionTime));
+        if (CurrentState != State.Alert || CurrentState != State.Chasing)
+        {
+            NavMeshAgent.isStopped = true;
+            delayedSetDestinationRoutine = StartCoroutine(DelayedSetDestination(position, reactionTime));
+        }
 
         //NavMeshAgent.speed = walkingSpeed;
         timer = alertTime;
@@ -268,7 +292,12 @@ public class Human : MonoBehaviour
     {
         catSpotTimer = 0;
 
-        SubtitleUI.instance.ShowSubtitle(subtitleName, "I've got you now!", 3f);
+        if (CurrentState != State.Chasing)
+        {
+            timer = 0;
+            SubtitleUI.instance.ShowSubtitle(subtitleName, "I've got you now!", 3f);
+        }
+
         CurrentState = State.Chasing;
         NavMeshAgent.isStopped = false;
         NavMeshAgent.SetDestination(GetPlayerPosition());
@@ -278,10 +307,8 @@ public class Human : MonoBehaviour
     private Coroutine delayedSetDestinationRoutine = null;
     private IEnumerator DelayedSetDestination(Vector3 target, float time)
     {
-        Debug.Log("Started delayed set dest");
         yield return new WaitForSeconds(time);
 
-        Debug.Log("FINISHED delayed set dest");
         NavMeshAgent.isStopped = false;
         NavMeshAgent.SetDestination(target);
         delayedSetDestinationRoutine = null;
@@ -304,11 +331,11 @@ public class Human : MonoBehaviour
 
     public Vector3 GetPlayerPosition()
     {
-        return playerRaycastTarget.position;
+        //return playerRaycastTarget.position;
 
         Vector3 result = playerRaycastTarget.position;
         NavMeshHit hit;
-        if (NavMesh.SamplePosition(new Vector3(playerRaycastTarget.position.x, transform.position.y, playerRaycastTarget.position.z), out hit, 20f, NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(new Vector3(playerRaycastTarget.position.x, transform.position.y, playerRaycastTarget.position.z), out hit, NavMeshAgent.height, NavMesh.AllAreas))
         {
             result = hit.position;
         }

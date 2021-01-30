@@ -29,7 +29,8 @@ public class SubtitleUI : MonoBehaviour
 
     public void ShowSubtitle(string header, string subtitle, float audioDuration = 0, bool overrideMinimumTime = false)
     {
-        Debug.Log("Showing earned chaos");
+        if (gameObject.activeSelf)
+            return;
 
         subtitleHeader.text = headerTextPrefix + header + headerTextPostfix;
         subtitleText.text = subtitle;
