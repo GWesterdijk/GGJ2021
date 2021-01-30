@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class Chaos : MonoBehaviour
 {
     public static List<Chaos> uncompletedChaos = new List<Chaos>();
+    public static float TotalChaosScore = 0;
 
     public bool alertsPlayer = true;
     public List<Chaos> duplicateChaosObjectives = new List<Chaos>();
@@ -40,6 +41,7 @@ public class Chaos : MonoBehaviour
         // eat ass
         // Add chaos counter to total chaos meter
         ChaosUI.instance.ShowEarnedChaos(ChaosTitle, ChaosScore);
+        TotalChaosScore += ChaosScore;
 
         enabled = false;
         foreach (var chaosObjective in duplicateChaosObjectives)

@@ -57,7 +57,6 @@ public class Player : MonoBehaviour
 
     private Vector3 input;
     private bool willJump = false;
-    private bool canJump = false;
     [SerializeField] private float jumpInputTime = 0.2f;
     private float _jumpInputTimer;
     [SerializeField] private float movementSpeed;
@@ -135,21 +134,6 @@ public class Player : MonoBehaviour
             playerModel.rotation = Quaternion.LookRotation(velocity.normalized, Vector3.up);
         if (isGrounded)
             playerModel.rotation = Quaternion.Euler(0, playerModel.rotation.eulerAngles.y, playerModel.rotation.eulerAngles.z);
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        canJump = true;
-    }
-
-    private void OnCollisionStay(Collision collision)
-    {
-        canJump = true;
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        canJump = false;
     }
 
     private void Jump()

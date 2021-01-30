@@ -24,7 +24,23 @@ public class PlayerCamera : MonoBehaviour
         rotationOffset.y += Input.GetAxis("Mouse X");
         rotationOffset.x -= Input.GetAxis("Mouse Y");
 
-        transform.position = target.position + Quaternion.Euler(rotationOffset) * offset;
+        Vector3 targetPosition = target.position + Quaternion.Euler(rotationOffset) * offset;
+
+        // Bit shift the index of the layer (8) to get a bit mask
+        int layerMask = 1 << 8;
+
+        // This would cast rays only against colliders in layer 8.
+        // But instead we want to collide against everything except layer 8. The ~ operator does this, it inverts a bitmask.
+        layerMask = ~layerMask;
+
+        RaycastHit hit;
+        // Does the ray intersect any objects excluding the player layer
+        if (Physics.Raycast(target.position, (targetPosition - target.transform.position), out hit, (targetPosition - target.transform.position).magnitude, layerMask))
+        {
+            targetPosition = hit.point;
+        }
+
+        transform.position = targetPosition;
         LookAtTarget();
     }
 
