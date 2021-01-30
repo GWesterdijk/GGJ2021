@@ -43,7 +43,8 @@ public class Human : MonoBehaviour
     private void Start()
     {
         currentRoom = RoomWaypoint.Waypoints[Random.Range(0, RoomWaypoint.Waypoints.Count)];
-        WalkToNewRoom();
+        WalkToNewRoom(true);
+        SubtitleUI.instance.ShowSubtitle("Here kitty kitty kitty", subtitleName);
     }
 
     // Update is called once per frame
@@ -174,19 +175,20 @@ public class Human : MonoBehaviour
     /// <summary>
     /// Gets a new waitpoint and starts navigating to it
     /// </summary>
-    public void WalkToNewRoom()
+    public void WalkToNewRoom(bool skipSubtitle = false)
     {
         catSpotTimer = 0;
         currentRoom = RoomWaypoint.Waypoints[Random.Range(0, RoomWaypoint.Waypoints.Count)];
         NavMeshAgent.isStopped = false;
-        SubtitleUI.instance.ShowSubtitle(subtitleName, "Maybe somewhere else in the house", 3f);
+        if (!skipSubtitle)
+            SubtitleUI.instance.ShowSubtitle(subtitleName, "Maybe somewhere else in the house", 3f);
         NavMeshAgent.SetDestination(currentRoom.transform.position);
         CurrentState = State.Walking;
     }
 
     public void ContinueOnPath()
     {
-        SubtitleUI.instance.ShowSubtitle(subtitleName, "Huh, must have been the wind", 3f);
+        SubtitleUI.instance.ShowSubtitle(subtitleName, "Huh, must have been the wind...", 3f);
 
         timer = 0;
         NavMeshAgent.isStopped = false;
