@@ -58,7 +58,7 @@ public class Human : MonoBehaviour
     {
         currentRoom = RoomWaypoint.Waypoints[Random.Range(0, RoomWaypoint.Waypoints.Count)];
         WalkToNewRoom(true);
-        SubtitleUI.instance.ShowSubtitle("Here kitty kitty kitty", subtitleName);
+        SubtitleUI.instance.ShowSubtitle(subtitleName, "Here kitty kitty kitty");
     }
 
     // Update is called once per frame
@@ -110,6 +110,10 @@ public class Human : MonoBehaviour
                 break;
             case State.Chasing:
                 // Chase that darn cat
+                if (NavMeshAgent.remainingDistance < NavMeshAgent.stoppingDistance)
+                {
+                    LoseGame();
+                }
                 break;
             default:
                 break;
@@ -134,12 +138,18 @@ public class Human : MonoBehaviour
                     Debug.DrawRay(raycastOrigin.position, (hit.point - raycastOrigin.position), new Color(1.0f, 0.64f, 0.0f));
                     if (CurrentState == State.Chasing)
                     {
-                        BecomeAlert();
+                        BecomeAlert(true);
                     }
                 }
             }
             else
+            {
                 Debug.DrawRay(raycastOrigin.position, playerRaycastTarget.position - raycastOrigin.position, Color.green);
+                if (CurrentState == State.Chasing)
+                {
+                    BecomeAlert(true);
+                }
+            }
         }
     }
 
@@ -204,7 +214,7 @@ public class Human : MonoBehaviour
         NavMeshAgent.isStopped = true;
         delayedSetDestinationRoutine = StartCoroutine(DelayedSetDestination(position, reactionTime));
 
-        NavMeshAgent.speed = walkingSpeed;
+        //NavMeshAgent.speed = walkingSpeed;
         timer = alertTime;
         CurrentState = State.Alert;
         catSpotTimer += Time.deltaTime;
@@ -283,14 +293,19 @@ public class Human : MonoBehaviour
         {
             if (CurrentState == State.Chasing) //|| CurrentState == State.Alert)
             {
-                Debug.Log("LOSE GAME");
-                Debug.Break();
-                Application.Quit();
+                LoseGame();
             }
             else
             {
                 BecomeAlert();
             }
         }
+    }
+
+    public void LoseGame()
+    {
+        Debug.Log("LOSE GAME");
+        Debug.Break();
+        Application.Quit();
     }
 }
