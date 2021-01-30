@@ -25,8 +25,7 @@ public class Chaos : MonoBehaviour
             if (Human.instance.IsGameOver == false)
             {
                 Debug.Log("Completed all chaos objectives");
-                Debug.Log("YOU WIN");
-                Debug.Break();
+                Human.instance.WinGame();
             }
         }
     }

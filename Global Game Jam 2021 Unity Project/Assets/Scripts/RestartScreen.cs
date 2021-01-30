@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameOverScreen : MonoBehaviour
+public class RestartScreen : MonoBehaviour
 {
     private void OnEnable()
     {
@@ -15,7 +15,7 @@ public class GameOverScreen : MonoBehaviour
     void Update()
     {
         Time.timeScale = 0;
-        if (Input.anyKeyDown)
+        if (Input.GetButtonUp("Jump"))
         {
             gameObject.SetActive(false);
             Time.timeScale = 1;

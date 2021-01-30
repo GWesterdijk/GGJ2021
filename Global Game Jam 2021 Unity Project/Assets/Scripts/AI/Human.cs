@@ -18,7 +18,8 @@ public class Human : MonoBehaviour
     }
 
     [SerializeField] private GameObject gameOverUI;
-    [SerializeField] public bool IsGameOver = false;
+    [SerializeField] private GameObject winGameUI;
+    [HideInInspector] public bool IsGameOver = false;
 
     private NavMeshAgent _navMeshAgent;
     public NavMeshAgent NavMeshAgent
@@ -382,6 +383,17 @@ public class Human : MonoBehaviour
         IsGameOver = true;
 
         Debug.Log("LOSE GAME");
+        //Debug.Break();
+        //Application.Quit();
+    }
+
+    [Button(25)]
+    public void WinGame()
+    {
+        winGameUI.SetActive(true);
+        IsGameOver = true;
+
+        Debug.Log("WIN GAME");
         //Debug.Break();
         //Application.Quit();
     }
