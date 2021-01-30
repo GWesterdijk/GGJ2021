@@ -127,10 +127,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpInputTime: 0.2
   movementSpeed: 25
-  maxSpeed: 3
+  maxSpeed: 2
   drag: 25
-  gravity: 25
-  jumpSpeed: 8
+  gravity: 15
+  jumpSpeed: 6
   playerCamera: {fileID: 0}
 --- !u!143 &1673464344
 CharacterController:
