@@ -44,6 +44,7 @@ public class Player : MonoBehaviour
     private float _jumpInputTimer;
     [SerializeField] private float movementSpeed;
     [SerializeField] private float maxSpeed;
+    [SerializeField] private float maxRunSpeed;
     [SerializeField] private float drag;
     [SerializeField] private float gravity = 9.81f;
     [SerializeField] private float jumpSpeed;
