@@ -139,8 +139,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerModel: {fileID: 1576134291963727440}
   jumpInputTime: 0.2
-  movementSpeed: 25
+  movementSpeed: 7
   maxSpeed: 2
+  maxRunSpeed: 3
   drag: 25
   gravity: 15
   jumpSpeed: 6

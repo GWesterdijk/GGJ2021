@@ -190,7 +190,7 @@ public class Human : MonoBehaviour
     /// </summary>
     public void BecomeAlert(bool skipSubtitle = false)
     {
-        BecomeAlert(skipSubtitle, playerRaycastTarget.position);
+        BecomeAlert(skipSubtitle, GetPlayerPosition());
 
         // TODO: trigger searching animation
 
@@ -271,7 +271,7 @@ public class Human : MonoBehaviour
         SubtitleUI.instance.ShowSubtitle(subtitleName, "I've got you now!", 3f);
         CurrentState = State.Chasing;
         NavMeshAgent.isStopped = false;
-        NavMeshAgent.SetDestination(playerRaycastTarget.position);
+        NavMeshAgent.SetDestination(GetPlayerPosition());
         NavMeshAgent.speed = runningSpeed;
     }
 
@@ -300,6 +300,19 @@ public class Human : MonoBehaviour
                 BecomeAlert();
             }
         }
+    }
+
+    public Vector3 GetPlayerPosition()
+    {
+        return playerRaycastTarget.position;
+
+        Vector3 result = playerRaycastTarget.position;
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(new Vector3(playerRaycastTarget.position.x, transform.position.y, playerRaycastTarget.position.z), out hit, 20f, NavMesh.AllAreas))
+        {
+            result = hit.position;
+        }
+        return result;
     }
 
     public void LoseGame()

@@ -72,7 +72,15 @@ public class Player : MonoBehaviour
             temp -= Vector2.ClampMagnitude(temp.normalized * drag * Time.deltaTime, temp.magnitude);
         }
 
-        temp = Vector2.ClampMagnitude(temp, maxSpeed);
+        if (Input.GetButton("Run"))
+        {
+            temp = Vector2.ClampMagnitude(temp, maxRunSpeed);
+        }
+        else
+        {
+            temp = Vector2.ClampMagnitude(temp, maxSpeed);
+
+        }
         velocity.x = temp.x;
         velocity.z = temp.y;
 
