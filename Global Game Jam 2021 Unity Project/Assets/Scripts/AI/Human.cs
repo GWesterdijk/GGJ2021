@@ -18,6 +18,8 @@ public class Human : MonoBehaviour
         }
     }
 
+    [SerializeField] string subtitleName = "Stefan de Kattenwasser";
+
     public enum State
     {
         Walking,
@@ -36,11 +38,13 @@ public class Human : MonoBehaviour
     [SerializeField] private RoomWaypoint currentRoom;
     [SerializeField] private float catSpotTime = 2;
     private float catSpotTimer = 0;
+    [SerializeField] private float reactionTime = 1;
 
     private void Start()
     {
         currentRoom = RoomWaypoint.Waypoints[Random.Range(0, RoomWaypoint.Waypoints.Count)];
-        WalkToNewRoom();
+        WalkToNewRoom(true);
+        SubtitleUI.instance.ShowSubtitle("Here kitty kitty kitty", subtitleName);
     }
 
     // Update is called once per frame
@@ -50,7 +54,7 @@ public class Human : MonoBehaviour
         {
             case State.Walking:
                 // Walk toward selected waypoint
-                if (NavMeshAgent.remainingDistance < NavMeshAgent.stoppingDistance)
+                if (NavMeshAgent.remainingDistance < NavMeshAgent.stoppingDistance && delayedSetDestinationRoutine == null)
                 {
                     StartSearhingForCat();
                 }
@@ -71,7 +75,7 @@ public class Human : MonoBehaviour
                 break;
             case State.Alert:
                 // Look for that darn cat in current spot for certain time
-                if (NavMeshAgent.remainingDistance < NavMeshAgent.stoppingDistance)
+                if (NavMeshAgent.remainingDistance < NavMeshAgent.stoppingDistance && delayedSetDestinationRoutine == null)
                 {
                     NavMeshAgent.isStopped = true;
                 }
@@ -81,10 +85,13 @@ public class Human : MonoBehaviour
                     StartChasingCat();
                 }
 
-                timer -= Time.deltaTime;
-                if (timer <= 0)
+                if (NavMeshAgent.isStopped && delayedSetDestinationRoutine == null)
                 {
-                    ContinueOnPath();
+                    timer -= Time.deltaTime;
+                    if (timer <= 0)
+                    {
+                        ContinueOnPath();
+                    }
                 }
                 break;
             case State.Chasing:
@@ -123,7 +130,7 @@ public class Human : MonoBehaviour
     /// </summary>
     public void TriggerHearingCat()
     {
-
+        BecomeAlert();
     }
 
     public void OnSpotCat()
@@ -134,10 +141,12 @@ public class Human : MonoBehaviour
                 BecomeAlert();
                 break;
             case State.Searching:
-                catSpotTimer += Time.deltaTime;
+                BecomeAlert();
+                //catSpotTimer += Time.deltaTime;
                 break;
             case State.Alert:
-                catSpotTimer += Time.deltaTime;
+                BecomeAlert();
+                //catSpotTimer += Time.deltaTime;
                 break;
             case State.Chasing:
                 break;
@@ -153,7 +162,11 @@ public class Human : MonoBehaviour
     {
         // TODO: trigger searching animation
 
-        NavMeshAgent.SetDestination(playerRaycastTarget.position);
+        SubtitleUI.instance.ShowSubtitle(subtitleName, "Is that you over there?", 3f);
+        //NavMeshAgent.SetDestination(playerRaycastTarget.position);
+        NavMeshAgent.isStopped = true;
+        delayedSetDestinationRoutine = StartCoroutine(DelayedSetDestination(playerRaycastTarget.position, reactionTime));
+
         timer = alertTime;
         CurrentState = State.Alert;
         catSpotTimer += Time.deltaTime;
@@ -162,19 +175,24 @@ public class Human : MonoBehaviour
     /// <summary>
     /// Gets a new waitpoint and starts navigating to it
     /// </summary>
-    public void WalkToNewRoom()
+    public void WalkToNewRoom(bool skipSubtitle = false)
     {
         catSpotTimer = 0;
         currentRoom = RoomWaypoint.Waypoints[Random.Range(0, RoomWaypoint.Waypoints.Count)];
         NavMeshAgent.isStopped = false;
+        if (!skipSubtitle)
+            SubtitleUI.instance.ShowSubtitle(subtitleName, "Maybe somewhere else in the house", 3f);
         NavMeshAgent.SetDestination(currentRoom.transform.position);
         CurrentState = State.Walking;
     }
 
     public void ContinueOnPath()
     {
+        SubtitleUI.instance.ShowSubtitle(subtitleName, "Huh, must have been the wind...", 3f);
+
         timer = 0;
         NavMeshAgent.isStopped = false;
+        NavMeshAgent.SetDestination(currentRoom.transform.position);
         CurrentState = State.Walking;
     }
 
@@ -184,6 +202,8 @@ public class Human : MonoBehaviour
     public void StartSearhingForCat()
     {
         NavMeshAgent.isStopped = true;
+
+        SubtitleUI.instance.ShowSubtitle(subtitleName, "Hmm must be here somewhere", 3f);
         // TODO: Play searching animation
         timer = currentRoom.WaitTime;
         CurrentState = State.Searching;
@@ -195,8 +215,23 @@ public class Human : MonoBehaviour
     public void StartChasingCat()
     {
         catSpotTimer = 0;
+
+        SubtitleUI.instance.ShowSubtitle(subtitleName, "I've got you now!", 3f);
+
         Debug.Log("LOSE GAME");
         Debug.Break();
         Application.Quit();
+    }
+
+    private Coroutine delayedSetDestinationRoutine = null;
+    private IEnumerator DelayedSetDestination(Vector3 target, float time)
+    {
+        Debug.Log("Started delayed set dest");
+        yield return new WaitForSeconds(time);
+
+        Debug.Log("FINISHED delayed set dest");
+        NavMeshAgent.isStopped = false;
+        NavMeshAgent.SetDestination(target);
+        delayedSetDestinationRoutine = null;
     }
 }

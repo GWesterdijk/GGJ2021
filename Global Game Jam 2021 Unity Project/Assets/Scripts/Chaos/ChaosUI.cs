@@ -47,5 +47,6 @@ public class ChaosUI : MonoBehaviour
         yield return new WaitForSeconds(time);
 
         gameObject.SetActive(false);
+        showtimer = null;
     }
 }
