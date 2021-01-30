@@ -4,6 +4,24 @@ using UnityEngine;
 
 public class Chaos : MonoBehaviour
 {
+    public static List<Chaos> uncompletedChaos = new List<Chaos>();
+
+    public virtual void OnEnable()
+    {
+        uncompletedChaos.Add(this);
+    }
+
+    public virtual void OnDisable()
+    {
+        uncompletedChaos.Remove(this);
+
+        if (uncompletedChaos.Count <= 0)
+        {
+            Debug.Log("Completed all chaos objectives");
+            Debug.Log("YOU WIN");
+            Debug.Break();
+        }
+    }
 
     protected bool chaosDone = false;
     public string ChaosTitle;
@@ -12,13 +30,11 @@ public class Chaos : MonoBehaviour
 
     public virtual void DoChaos()
     {
-        if (chaosDone)
-            return;
-        chaosDone = true;
-
         // eat ass
         // Add chaos counter to total chaos meter
         ChaosUI.instance.ShowEarnedChaos(ChaosTitle, ChaosScore);
         Debug.Log("Did Chaos + Score: " + ChaosScore, transform);
+
+        enabled = false;
     }
 }

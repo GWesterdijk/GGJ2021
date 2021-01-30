@@ -9,7 +9,7 @@ public class GroundFall : Chaos
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collisionTags.Contains(collision.transform.tag))
+        if (enabled && collisionTags.Contains(collision.transform.tag))
         {
             DoChaos();
         }
@@ -17,11 +17,6 @@ public class GroundFall : Chaos
 
     public override void DoChaos()
     {
-        if (chaosDone)
-            return;
-
         base.DoChaos();
-
-        Debug.Log("Chaos After", transform);
     }
 }
