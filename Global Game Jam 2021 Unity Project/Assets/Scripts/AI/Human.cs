@@ -40,6 +40,9 @@ public class Human : MonoBehaviour
     }
     public State CurrentState = State.Walking;
 
+    [SerializeField] private float walkingSpeed = 2;
+    [SerializeField] private float runningSpeed = 3.5f;
+
     [SerializeField] private Transform playerRaycastTarget;
     [SerializeField] private Transform raycastOrigin;
     [SerializeField] private float sightFov = 0.5f;
@@ -129,6 +132,10 @@ public class Human : MonoBehaviour
                 else
                 {
                     Debug.DrawRay(raycastOrigin.position, (hit.point - raycastOrigin.position), new Color(1.0f, 0.64f, 0.0f));
+                    if (CurrentState == State.Chasing)
+                    {
+                        BecomeAlert();
+                    }
                 }
             }
             else
@@ -161,6 +168,7 @@ public class Human : MonoBehaviour
                 //catSpotTimer += Time.deltaTime;
                 break;
             case State.Chasing:
+                StartChasingCat();
                 break;
             default:
                 break;
@@ -196,6 +204,7 @@ public class Human : MonoBehaviour
         NavMeshAgent.isStopped = true;
         delayedSetDestinationRoutine = StartCoroutine(DelayedSetDestination(position, reactionTime));
 
+        NavMeshAgent.speed = walkingSpeed;
         timer = alertTime;
         CurrentState = State.Alert;
         catSpotTimer += Time.deltaTime;
@@ -213,6 +222,7 @@ public class Human : MonoBehaviour
             SubtitleUI.instance.ShowSubtitle(subtitleName, "Maybe somewhere else in the house", 3f);
         NavMeshAgent.SetDestination(currentRoom.transform.position);
         CurrentState = State.Walking;
+        NavMeshAgent.speed = walkingSpeed;
     }
 
     public void ContinueOnPath()
@@ -223,6 +233,7 @@ public class Human : MonoBehaviour
         NavMeshAgent.isStopped = false;
         NavMeshAgent.SetDestination(currentRoom.transform.position);
         CurrentState = State.Walking;
+        NavMeshAgent.speed = walkingSpeed;
     }
 
     /// <summary>
@@ -236,6 +247,8 @@ public class Human : MonoBehaviour
         // TODO: Play searching animation
         timer = currentRoom.WaitTime;
         CurrentState = State.Searching;
+
+        NavMeshAgent.speed = walkingSpeed;
     }
 
     /// <summary>
@@ -246,10 +259,10 @@ public class Human : MonoBehaviour
         catSpotTimer = 0;
 
         SubtitleUI.instance.ShowSubtitle(subtitleName, "I've got you now!", 3f);
-
-        Debug.Log("LOSE GAME");
-        Debug.Break();
-        Application.Quit();
+        CurrentState = State.Chasing;
+        NavMeshAgent.isStopped = false;
+        NavMeshAgent.SetDestination(playerRaycastTarget.position);
+        NavMeshAgent.speed = runningSpeed;
     }
 
     private Coroutine delayedSetDestinationRoutine = null;
@@ -262,5 +275,22 @@ public class Human : MonoBehaviour
         NavMeshAgent.isStopped = false;
         NavMeshAgent.SetDestination(target);
         delayedSetDestinationRoutine = null;
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.transform.tag == "Player")
+        {
+            if (CurrentState == State.Chasing) //|| CurrentState == State.Alert)
+            {
+                Debug.Log("LOSE GAME");
+                Debug.Break();
+                Application.Quit();
+            }
+            else
+            {
+                BecomeAlert();
+            }
+        }
     }
 }

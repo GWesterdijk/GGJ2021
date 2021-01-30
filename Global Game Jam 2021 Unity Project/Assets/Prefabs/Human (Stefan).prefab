@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3817064746216947274}
   - component: {fileID: 3817064746216947276}
   - component: {fileID: 3817064746216947275}
+  - component: {fileID: 439570359259467679}
   m_Layer: 0
   m_Name: Human (Stefan)
   m_TagString: Untagged
@@ -75,6 +76,21 @@ MonoBehaviour:
   alertTime: 4
   currentRoom: {fileID: 0}
   catSpotTime: 2
+  reactionTime: 1
+--- !u!136 &439570359259467679
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3817064746216947273}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.29
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1001 &3817064746112753823
 PrefabInstance:
   m_ObjectHideFlags: 0
