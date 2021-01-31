@@ -7543,12 +7543,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6423353963603527197, guid: 7c34c4f85379c5c4bbc388fb40e59cbb,
+        type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 7c34c4f85379c5c4bbc388fb40e59cbb,
         type: 3}
       propertyPath: m_Name
       value: kitchenBlender
       objectReference: {fileID: 0}
     - target: {fileID: 3451118302482216456, guid: 7c34c4f85379c5c4bbc388fb40e59cbb,
+        type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8436896425330687136, guid: 7c34c4f85379c5c4bbc388fb40e59cbb,
         type: 3}
       propertyPath: m_Convex
       value: 1
@@ -8868,6 +8878,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: pottedPlant (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1189620869618779536, guid: d1c79df492ad51f4ea9fd3ca88a102c4,
+        type: 3}
+      propertyPath: m_Convex
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3451118302482216456, guid: d1c79df492ad51f4ea9fd3ca88a102c4,
         type: 3}
