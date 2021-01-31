@@ -45,5 +45,6 @@ public class RestartScreen : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         Cursor.lockState = CursorLockMode.Locked;
+        Chaos.TotalChaosScore = 0;
     }
 }
