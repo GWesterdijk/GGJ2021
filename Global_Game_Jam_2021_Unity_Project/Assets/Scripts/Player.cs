@@ -17,6 +17,18 @@ public class Player : MonoBehaviour
         }
     }
 
+    private Animator _animator;
+    public Animator Animator
+    {
+        get
+        {
+            if (_animator == null)
+                _animator = transform.GetChild(0).GetComponent<Animator>();
+
+            return _animator;
+        }
+    }
+
     private CharacterController _characterController;
     public CharacterController CharacterController
     {
@@ -127,7 +139,7 @@ public class Player : MonoBehaviour
 
         //Rigidbody.velocity = velocity;
         CharacterController.Move(velocity * Time.deltaTime);
-
+        Animator.SetFloat("Speed", CharacterController.velocity.magnitude);
     }
 
     private void LateUpdate()
