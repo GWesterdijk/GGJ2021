@@ -62,6 +62,7 @@ public class Human : MonoBehaviour
     [SerializeField] private float unreachableLoseGameTime = 2;
     [SerializeField] private Queue<RoomWaypoint> comingRooms = new Queue<RoomWaypoint>();
     [SerializeField] private RoomWaypoint currentRoom;
+    [SerializeField] private RoomWaypoint firstRoom;
     [SerializeField] private float catSpotTime = 2;
     private float catSpotTimer = 0;
     [SerializeField] private float reactionTime = 1;
@@ -305,9 +306,14 @@ public class Human : MonoBehaviour
         if (comingRooms.Count <= 0)
         {
             comingRooms = new Queue<RoomWaypoint>(RoomWaypoint.Waypoints.Count);
+            comingRooms.Enqueue(firstRoom);
             for (int i = 0; i < RoomWaypoint.Waypoints.Count; i++)
             {
-                comingRooms.Enqueue(RoomWaypoint.Waypoints[Random.Range(0, RoomWaypoint.Waypoints.Count - i)]);
+                RoomWaypoint room = RoomWaypoint.Waypoints[Random.Range(0, RoomWaypoint.Waypoints.Count - i)];
+                if (room != firstRoom)
+                {
+                    comingRooms.Enqueue(room);
+                }
             }
         }
 
