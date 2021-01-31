@@ -52,7 +52,7 @@ public class Chaos : MonoBehaviour
     {
         // eat ass
         // Add chaos counter to total chaos meter
-        ChaosUI.instance.ShowEarnedChaos(ChaosTitle, ChaosScore);
+        ChaosUI.instance?.ShowEarnedChaos(ChaosTitle, ChaosScore);
         TotalChaosScore += ChaosScore;
 
         enabled = false;
@@ -63,10 +63,14 @@ public class Chaos : MonoBehaviour
 
         if (alertsPlayer)
         {
-            Human.instance.TriggerHearingCat(transform.position);
+            Human.instance?.TriggerHearingCat(transform.position);
         }
-        AudioSource.loop = false;
-        AudioSource.spatialBlend = 1;
-        AudioSource.Play();
+
+        if (AudioSource != null)
+        {
+            AudioSource.loop = false;
+            AudioSource.spatialBlend = 1;
+            AudioSource.Play();
+        }
     }
 }

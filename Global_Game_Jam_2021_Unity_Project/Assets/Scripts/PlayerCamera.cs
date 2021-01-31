@@ -10,7 +10,7 @@ public class PlayerCamera : MonoBehaviour
     private Vector3 offset;
 
     private Vector3 rotationOffset = Vector3.zero;
-    [SerializeField] private 
+    [SerializeField] private float sensitivity = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -21,8 +21,11 @@ public class PlayerCamera : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        rotationOffset.y += Input.GetAxis("Mouse X");
-        rotationOffset.x -= Input.GetAxis("Mouse Y");
+        if (Time.timeScale == 0)
+            return;
+
+        rotationOffset.y += Input.GetAxis("Mouse X") * sensitivity;
+        rotationOffset.x += Input.GetAxis("Mouse Y") * sensitivity;
 
         Vector3 targetPosition = target.position + Quaternion.Euler(rotationOffset) * offset;
 
@@ -40,7 +43,7 @@ public class PlayerCamera : MonoBehaviour
             targetPosition = hit.point;
         }
 
-        transform.position = targetPosition;
+        transform.position = Vector3.Lerp(transform.position, targetPosition, 0.5f);
         LookAtTarget();
     }
 
