@@ -1,5 +1,6 @@
 ﻿using Sirenix.OdinInspector;
 using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -22,6 +23,7 @@ public class Human : MonoBehaviour
 
     [SerializeField] private TMP_Text gameOverUIScore;
     [SerializeField] private GameObject winGameUI;
+    [SerializeField] private GameObject pauseGameUI;
     [SerializeField] private TMP_Text winGameUIScore;
     [HideInInspector] public bool IsGameOver = false;
 
@@ -37,6 +39,18 @@ public class Human : MonoBehaviour
         }
     }
 
+    private Animator _animator;
+    public Animator Animator
+    {
+        get
+        {
+            if (_animator == null)
+                _animator = transform.GetChild(0).GetComponent<Animator>();
+
+            return _animator;
+        }
+    }
+
     [SerializeField] string subtitleName = "Stefan de Kattenwasser";
 
     public enum State
@@ -48,6 +62,17 @@ public class Human : MonoBehaviour
     }
     public State CurrentState = State.Walking;
 
+    [SerializeField] private List<string> onHearingCatDialogue = new List<string>();
+    [SerializeField] private List<string> onWalkToNewRoomDialogue = new List<string>();
+    [SerializeField] private List<string> onStopAlertCatDialogue = new List<string>();
+    [SerializeField] private List<string> onStartSearchingRoomDialogue = new List<string>();
+    [SerializeField] private List<string> onStartRunningDialogue = new List<string>();
+
+    private string GetRandomDialogue(List<string> list)
+    {
+        return list[Random.Range(0, list.Count)];
+    }
+
     [SerializeField] private float walkingSpeed = 2;
     [SerializeField] private float runningSpeed = 3.5f;
 
@@ -58,14 +83,16 @@ public class Human : MonoBehaviour
     float timer = 0;
     [SerializeField] private float alertTime = 4;
     [SerializeField] private float unreachableLoseGameTime = 2;
+    [SerializeField] private Queue<RoomWaypoint> comingRooms = new Queue<RoomWaypoint>();
     [SerializeField] private RoomWaypoint currentRoom;
+    [SerializeField] private RoomWaypoint firstRoom;
     [SerializeField] private float catSpotTime = 2;
     private float catSpotTimer = 0;
     [SerializeField] private float reactionTime = 1;
 
     private void Start()
     {
-        currentRoom = RoomWaypoint.Waypoints[Random.Range(0, RoomWaypoint.Waypoints.Count)];
+        //currentRoom = RoomWaypoint.Waypoints[Random.Range(0, RoomWaypoint.Waypoints.Count)];
         WalkToNewRoom(true);
         SubtitleUI.instance.ShowSubtitle(subtitleName, "Here kitty kitty kitty");
     }
@@ -73,6 +100,16 @@ public class Human : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Cursor.lockState = CursorLockMode.None;
+            PauseGame();
+        }
+
+        Animator.SetFloat("Speed", NavMeshAgent.velocity.magnitude);
+
         Ray ray;
         RaycastHit hit;
 
@@ -211,7 +248,8 @@ public class Human : MonoBehaviour
     public void TriggerHearingCat(Vector3 position)
     {
         BecomeAlert(true, position);
-        SubtitleUI.instance.ShowSubtitle(subtitleName, "Hey! What was that?");
+        //onHearingCatDialogue
+        SubtitleUI.instance.ShowSubtitle(subtitleName, GetRandomDialogue(onHearingCatDialogue)); //"Hey! What was that?") ;
     }
 
     public void OnSpotCat()
@@ -289,10 +327,29 @@ public class Human : MonoBehaviour
     public void WalkToNewRoom(bool skipSubtitle = false)
     {
         catSpotTimer = 0;
-        currentRoom = RoomWaypoint.Waypoints[Random.Range(0, RoomWaypoint.Waypoints.Count)];
+
+        if (comingRooms.Count <= 0)
+        {
+            comingRooms = new Queue<RoomWaypoint>(RoomWaypoint.Waypoints.Count);
+            comingRooms.Enqueue(firstRoom);
+            for (int i = 0; i < RoomWaypoint.Waypoints.Count; i++)
+            {
+                RoomWaypoint room = RoomWaypoint.Waypoints[Random.Range(0, RoomWaypoint.Waypoints.Count - i)];
+                if (room != firstRoom)
+                {
+                    comingRooms.Enqueue(room);
+                }
+            }
+        }
+
+        currentRoom = comingRooms.Dequeue(); //RoomWaypoint.Waypoints[Random.Range(0, RoomWaypoint.Waypoints.Count)];
+        comingRooms.Enqueue(currentRoom);
+
         NavMeshAgent.isStopped = false;
+
+        //
         if (!skipSubtitle)
-            SubtitleUI.instance.ShowSubtitle(subtitleName, "Maybe somewhere else in the house", 3f);
+            SubtitleUI.instance.ShowSubtitle(subtitleName, GetRandomDialogue(onWalkToNewRoomDialogue), 3f);
         //NavMeshAgent.SetDestination(currentRoom.transform.position);
         NavMeshAgent.destination = currentRoom.transform.position;
         CurrentState = State.Walking;
@@ -301,7 +358,8 @@ public class Human : MonoBehaviour
 
     public void ContinueOnPath()
     {
-        SubtitleUI.instance.ShowSubtitle(subtitleName, "Huh, must have been the wind...", 3f);
+        //
+        SubtitleUI.instance.ShowSubtitle(subtitleName, GetRandomDialogue(onStopAlertCatDialogue), 3f);
 
         timer = 0;
         NavMeshAgent.isStopped = false;
@@ -318,7 +376,8 @@ public class Human : MonoBehaviour
     {
         NavMeshAgent.isStopped = true;
 
-        SubtitleUI.instance.ShowSubtitle(subtitleName, "Hmm must be here somewhere", 3f);
+        //
+        SubtitleUI.instance.ShowSubtitle(subtitleName, GetRandomDialogue(onStartSearchingRoomDialogue), 3f);
         // TODO: Play searching animation
         timer = currentRoom.WaitTime;
         CurrentState = State.Searching;
@@ -336,7 +395,8 @@ public class Human : MonoBehaviour
         if (CurrentState != State.Chasing)
         {
             timer = 0;
-            SubtitleUI.instance.ShowSubtitle(subtitleName, "I've got you now!", 3f);
+            //
+            SubtitleUI.instance.ShowSubtitle(subtitleName, GetRandomDialogue(onStartRunningDialogue), 3f);
         }
 
         CurrentState = State.Chasing;
@@ -408,6 +468,16 @@ public class Human : MonoBehaviour
         IsGameOver = true;
 
         Debug.Log("WIN GAME");
+        //Debug.Break();
+        //Application.Quit();
+    }
+
+    [Button(25)]
+    public void PauseGame()
+    {
+        pauseGameUI.SetActive(true);
+
+        Debug.Log("PAUSE GAME");
         //Debug.Break();
         //Application.Quit();
     }
