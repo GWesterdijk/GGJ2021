@@ -68,15 +68,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff9776a0afbef004bb17a5b39352b714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameOverUI: {fileID: 0}
+  gameOverUIScore: {fileID: 0}
+  winGameUI: {fileID: 0}
+  pauseGameUI: {fileID: 0}
+  winGameUIScore: {fileID: 0}
+  IsGameOver: 0
   subtitleName: Stefan de Kattenwasser
   CurrentState: 0
+  onHearingCatDialogue:
+  - Hey! What was that?
+  onWalkToNewRoomDialogue:
+  - Hmm maybe somewhere else in the house
+  onStopAlertCatDialogue:
+  - Damnit, he vanished again
+  onStartSearchingRoomDialogue:
+  - Must be somewhere around here...
+  onStartRunningDialogue:
+  - Ah there you are!
+  walkingSpeed: 2
+  runningSpeed: 3.5
   playerRaycastTarget: {fileID: 0}
   raycastOrigin: {fileID: 3817064746112367129}
-  sightFov: 0.5
-  alertTime: 4
+  sightFov: 0.2
+  alertTime: 2
+  unreachableLoseGameTime: 2
   currentRoom: {fileID: 0}
+  firstRoom: {fileID: 0}
   catSpotTime: 2
-  reactionTime: 1
+  reactionTime: 0.25
 --- !u!136 &439570359259467679
 CapsuleCollider:
   m_ObjectHideFlags: 0
