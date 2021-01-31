@@ -22,6 +22,7 @@ public class Human : MonoBehaviour
 
     [SerializeField] private TMP_Text gameOverUIScore;
     [SerializeField] private GameObject winGameUI;
+    [SerializeField] private GameObject pauseGameUI;
     [SerializeField] private TMP_Text winGameUIScore;
     [HideInInspector] public bool IsGameOver = false;
 
@@ -73,6 +74,15 @@ public class Human : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Cursor.lockState = CursorLockMode.None;
+            PauseGame();
+        }
+
+
         Ray ray;
         RaycastHit hit;
 
@@ -408,6 +418,16 @@ public class Human : MonoBehaviour
         IsGameOver = true;
 
         Debug.Log("WIN GAME");
+        //Debug.Break();
+        //Application.Quit();
+    }
+
+    [Button(25)]
+    public void PauseGame()
+    {
+        pauseGameUI.SetActive(true);
+
+        Debug.Log("PAUSE GAME");
         //Debug.Break();
         //Application.Quit();
     }

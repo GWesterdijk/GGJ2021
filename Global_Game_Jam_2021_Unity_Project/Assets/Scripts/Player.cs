@@ -127,6 +127,7 @@ public class Player : MonoBehaviour
 
         //Rigidbody.velocity = velocity;
         CharacterController.Move(velocity * Time.deltaTime);
+
     }
 
     private void LateUpdate()
