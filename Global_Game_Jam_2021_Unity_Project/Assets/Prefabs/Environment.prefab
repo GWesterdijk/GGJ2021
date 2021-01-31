@@ -691,24 +691,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &368535185
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2732613538913326443}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfcab79743f20b24286bbbcf2872ec65, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  alertsPlayer: 1
-  duplicateChaosObjectives: []
-  ChaosTitle: Bringing the lights down
-  ChaosScore: 40
-  collisionTags:
-  - Floor
 --- !u!82 &2967124867379639947
 AudioSource:
   m_ObjectHideFlags: 0
@@ -805,6 +787,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &368535185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2732613538913326443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfcab79743f20b24286bbbcf2872ec65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alertsPlayer: 1
+  duplicateChaosObjectives: []
+  ChaosTitle: Bringing the lights down
+  ChaosScore: 40
+  collisionTags:
+  - Floor
 --- !u!65 &2967124867193743497
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -852,24 +852,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &399349741
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2732613538936361404}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfcab79743f20b24286bbbcf2872ec65, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  alertsPlayer: 1
-  duplicateChaosObjectives: []
-  ChaosTitle: You grow girl
-  ChaosScore: 70
-  collisionTags:
-  - Floor
 --- !u!82 &2967124867379639945
 AudioSource:
   m_ObjectHideFlags: 0
@@ -966,6 +948,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &399349741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2732613538936361404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfcab79743f20b24286bbbcf2872ec65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alertsPlayer: 1
+  duplicateChaosObjectives: []
+  ChaosTitle: You grow girl
+  ChaosScore: 70
+  collisionTags:
+  - Floor
 --- !u!54 &223802241
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1185,24 +1185,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1212592423
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2732613539163526919}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfcab79743f20b24286bbbcf2872ec65, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  alertsPlayer: 1
-  duplicateChaosObjectives: []
-  ChaosTitle: WWE THE CHAIR IS IN THE RING
-  ChaosScore: 50
-  collisionTags:
-  - Floor
 --- !u!82 &2967124867379639944
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1299,6 +1281,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1212592423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2732613539163526919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfcab79743f20b24286bbbcf2872ec65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alertsPlayer: 1
+  duplicateChaosObjectives: []
+  ChaosTitle: WWE THE CHAIR IS IN THE RING
+  ChaosScore: 50
+  collisionTags:
+  - Floor
 --- !u!54 &388495730
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1315,24 +1315,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &388495729
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2732613539237669052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfcab79743f20b24286bbbcf2872ec65, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  alertsPlayer: 1
-  duplicateChaosObjectives: []
-  ChaosTitle: A dummy's guide to tv waching
-  ChaosScore: 50
-  collisionTags:
-  - Floor
 --- !u!82 &2967124867379639951
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1429,6 +1411,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &388495729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2732613539237669052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfcab79743f20b24286bbbcf2872ec65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alertsPlayer: 1
+  duplicateChaosObjectives: []
+  ChaosTitle: A dummy's guide to tv waching
+  ChaosScore: 50
+  collisionTags:
+  - Floor
 --- !u!65 &1353829572
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1494,24 +1494,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &266841359
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2732613539434110476}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfcab79743f20b24286bbbcf2872ec65, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  alertsPlayer: 1
-  duplicateChaosObjectives: []
-  ChaosTitle: Sneaky bushes
-  ChaosScore: 50
-  collisionTags:
-  - Floor
 --- !u!82 &2967124867379639946
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1608,6 +1590,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &266841359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2732613539434110476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfcab79743f20b24286bbbcf2872ec65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alertsPlayer: 1
+  duplicateChaosObjectives: []
+  ChaosTitle: Sneaky bushes
+  ChaosScore: 50
+  collisionTags:
+  - Floor
 --- !u!54 &411151515
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1624,24 +1624,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &411151514
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2732613539506489466}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfcab79743f20b24286bbbcf2872ec65, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  alertsPlayer: 1
-  duplicateChaosObjectives: []
-  ChaosTitle: Another perspective
-  ChaosScore: 50
-  collisionTags:
-  - Floor
 --- !u!82 &2967124867379639952
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1738,6 +1720,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &411151514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2732613539506489466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfcab79743f20b24286bbbcf2872ec65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alertsPlayer: 1
+  duplicateChaosObjectives: []
+  ChaosTitle: Another perspective
+  ChaosScore: 50
+  collisionTags:
+  - Floor
 --- !u!54 &376201991
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1754,24 +1754,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &376201990
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2732613539537468678}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfcab79743f20b24286bbbcf2872ec65, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  alertsPlayer: 1
-  duplicateChaosObjectives: []
-  ChaosTitle: The weaker twin
-  ChaosScore: 50
-  collisionTags:
-  - Floor
 --- !u!82 &2967124867379639950
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1868,6 +1850,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &376201990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2732613539537468678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfcab79743f20b24286bbbcf2872ec65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alertsPlayer: 1
+  duplicateChaosObjectives: []
+  ChaosTitle: The weaker twin
+  ChaosScore: 50
+  collisionTags:
+  - Floor
 --- !u!54 &2967124867293040974
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1980,24 +1980,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &2967124867293040975
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2732613539613324778}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfcab79743f20b24286bbbcf2872ec65, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  alertsPlayer: 1
-  duplicateChaosObjectives: []
-  ChaosTitle: Destorying nature
-  ChaosScore: 60
-  collisionTags:
-  - Floor
 --- !u!82 &2967124867379639953
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2094,6 +2076,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2967124867293040975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2732613539613324778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfcab79743f20b24286bbbcf2872ec65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alertsPlayer: 1
+  duplicateChaosObjectives: []
+  ChaosTitle: Destorying nature
+  ChaosScore: 60
+  collisionTags:
+  - Floor
 --- !u!54 &2967124868726770695
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2237,24 +2237,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.24, y: 0.27, z: 0.09}
   m_Center: {x: 0.37952548, y: 0.72, z: 0.3}
---- !u!114 &468803094
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2732613539621315617}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c387b35e02e1ca042a45cc9d3d9d0c3b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  alertsPlayer: 1
-  duplicateChaosObjectives: []
-  ChaosTitle: Litterbox 3.0
-  ChaosScore: 70
-  collisionTags:
-  - Player
 --- !u!82 &2967124867379639956
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2351,6 +2333,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &468803094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2732613539621315617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c387b35e02e1ca042a45cc9d3d9d0c3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alertsPlayer: 1
+  duplicateChaosObjectives: []
+  ChaosTitle: Litterbox 3.0
+  ChaosScore: 70
+  collisionTags:
+  - Player
 --- !u!54 &30773150
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2942,24 +2942,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.13, y: 0.28, z: 0.15}
   m_Center: {x: 1.52, y: 1.17, z: 0.82250094}
---- !u!114 &799316008
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2732613539833514762}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c387b35e02e1ca042a45cc9d3d9d0c3b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  alertsPlayer: 1
-  duplicateChaosObjectives: []
-  ChaosTitle: Litterbox 2.0
-  ChaosScore: 50
-  collisionTags:
-  - Player
 --- !u!82 &2967124867379639957
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3056,6 +3038,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &799316008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2732613539833514762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c387b35e02e1ca042a45cc9d3d9d0c3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alertsPlayer: 1
+  duplicateChaosObjectives: []
+  ChaosTitle: Litterbox 2.0
+  ChaosScore: 50
+  collisionTags:
+  - Player
 --- !u!54 &2967124868414065668
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3992,24 +3992,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &2967124867976506516
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2732613540399689361}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfcab79743f20b24286bbbcf2872ec65, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  alertsPlayer: 1
-  duplicateChaosObjectives: []
-  ChaosTitle: No, you'll break it
-  ChaosScore: 200
-  collisionTags:
-  - Floor
 --- !u!82 &2967124867379639949
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4106,6 +4088,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2967124867976506516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2732613540399689361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfcab79743f20b24286bbbcf2872ec65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alertsPlayer: 1
+  duplicateChaosObjectives: []
+  ChaosTitle: No, you'll break it
+  ChaosScore: 200
+  collisionTags:
+  - Floor
 --- !u!54 &1353893233
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6869,24 +6869,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &4807484503364636125
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8393464881632583904}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfcab79743f20b24286bbbcf2872ec65, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  alertsPlayer: 1
-  duplicateChaosObjectives: []
-  ChaosTitle: Bringing the lights down
-  ChaosScore: 40
-  collisionTags:
-  - Floor
 --- !u!82 &2967124867379639948
 AudioSource:
   m_ObjectHideFlags: 0
@@ -6983,6 +6965,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4807484503364636125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8393464881632583904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfcab79743f20b24286bbbcf2872ec65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alertsPlayer: 1
+  duplicateChaosObjectives: []
+  ChaosTitle: Bringing the lights down
+  ChaosScore: 40
+  collisionTags:
+  - Floor
 --- !u!1001 &1041860089754456299
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35386,7 +35386,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 2eede632a65a0ad438029cad9d53015d,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 4294967295
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3451118302482216456, guid: 2eede632a65a0ad438029cad9d53015d,
         type: 3}
