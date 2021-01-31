@@ -4,10 +4,25 @@ using UnityEngine;
 
 public class PauseScreen : MonoBehaviour
 {
+    public GameObject LinkedCamera;
+
     private void OnEnable()
     {
 
         Cursor.lockState = CursorLockMode.None;
+        if (LinkedCamera != null)
+        {
+            LinkedCamera.SetActive(true);
+        }
+    }
+    private void OnDisable()
+    {
+
+        Cursor.lockState = CursorLockMode.None;
+        if (LinkedCamera != null)
+        {
+            LinkedCamera.SetActive(false);
+        }
     }
 
     // Update is called once per frame
