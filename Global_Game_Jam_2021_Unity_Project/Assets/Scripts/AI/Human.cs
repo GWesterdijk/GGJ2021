@@ -39,6 +39,18 @@ public class Human : MonoBehaviour
         }
     }
 
+    private Animator _animator;
+    public Animator Animator
+    {
+        get
+        {
+            if (_animator == null)
+                _animator = transform.GetChild(0).GetComponent<Animator>();
+
+            return _animator;
+        }
+    }
+
     [SerializeField] string subtitleName = "Stefan de Kattenwasser";
 
     public enum State
@@ -85,6 +97,7 @@ public class Human : MonoBehaviour
             PauseGame();
         }
 
+        Animator.SetFloat("Speed", NavMeshAgent.velocity.magnitude);
 
         Ray ray;
         RaycastHit hit;
