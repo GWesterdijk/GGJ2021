@@ -29,8 +29,8 @@ public class SubtitleUI : MonoBehaviour
 
     public void ShowSubtitle(string header, string subtitle, float audioDuration = 0, bool overrideMinimumTime = false)
     {
-        if (gameObject.activeSelf)
-            return;
+        //if (gameObject.activeSelf)
+        //    return;
 
         subtitleHeader.text = headerTextPrefix + header + headerTextPostfix;
         subtitleText.text = subtitle;
@@ -46,7 +46,7 @@ public class SubtitleUI : MonoBehaviour
             showtimer = StartCoroutine(DisableUIAfterTime(Mathf.Max(minimumShowtime, audioDuration)));
     }
 
-    Coroutine showtimer = null;
+    public Coroutine showtimer = null;
     private IEnumerator DisableUIAfterTime(float time)
     {
         yield return new WaitForSeconds(time);

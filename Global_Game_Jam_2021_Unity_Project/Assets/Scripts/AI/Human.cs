@@ -299,7 +299,7 @@ public class Human : MonoBehaviour
         // TODO: trigger searching animation
 
         //if (!skipSubtitle)
-        //    SubtitleUI.instance.ShowSubtitle(subtitleName, "Is that you over there?", 3f);
+            //SubtitleUI.instance.ShowSubtitle(subtitleName, "Is that you over there?", 3f);
 
         //NavMeshAgent.SetDestination(playerRaycastTarget.position);
         if (CurrentState != State.Alert || CurrentState != State.Chasing)

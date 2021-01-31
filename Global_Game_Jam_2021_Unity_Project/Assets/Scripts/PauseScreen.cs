@@ -29,10 +29,15 @@ public class PauseScreen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        SubtitleUI.instance.gameObject.SetActive(false);
+
         Time.timeScale = 0;
         if (Input.GetKeyUp(KeyCode.Space))
         {
             gameObject.SetActive(false);
+
+            if (SubtitleUI.instance.showtimer != null)
+                SubtitleUI.instance.gameObject.SetActive(true);
             Time.timeScale = 1;
             Cursor.lockState = CursorLockMode.Locked;
         }

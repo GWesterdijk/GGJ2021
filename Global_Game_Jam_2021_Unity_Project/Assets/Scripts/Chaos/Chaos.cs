@@ -66,7 +66,7 @@ public class Chaos : MonoBehaviour
             Human.instance?.TriggerHearingCat(transform.position);
         }
 
-        if (TryGetComponent<AudioSource>(out _))
+        if (GetComponent<AudioSource>() != null)
         {
             AudioSource.loop = false;
             AudioSource.spatialBlend = 1;
