@@ -1,5 +1,6 @@
 ﻿using Sirenix.OdinInspector;
 using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -59,6 +60,7 @@ public class Human : MonoBehaviour
     float timer = 0;
     [SerializeField] private float alertTime = 4;
     [SerializeField] private float unreachableLoseGameTime = 2;
+    [SerializeField] private Queue<RoomWaypoint> comingRooms = new Queue<RoomWaypoint>();
     [SerializeField] private RoomWaypoint currentRoom;
     [SerializeField] private float catSpotTime = 2;
     private float catSpotTimer = 0;
@@ -66,7 +68,7 @@ public class Human : MonoBehaviour
 
     private void Start()
     {
-        currentRoom = RoomWaypoint.Waypoints[Random.Range(0, RoomWaypoint.Waypoints.Count)];
+        //currentRoom = RoomWaypoint.Waypoints[Random.Range(0, RoomWaypoint.Waypoints.Count)];
         WalkToNewRoom(true);
         SubtitleUI.instance.ShowSubtitle(subtitleName, "Here kitty kitty kitty");
     }
@@ -299,7 +301,19 @@ public class Human : MonoBehaviour
     public void WalkToNewRoom(bool skipSubtitle = false)
     {
         catSpotTimer = 0;
-        currentRoom = RoomWaypoint.Waypoints[Random.Range(0, RoomWaypoint.Waypoints.Count)];
+
+        if (comingRooms.Count <= 0)
+        {
+            comingRooms = new Queue<RoomWaypoint>(RoomWaypoint.Waypoints.Count);
+            for (int i = 0; i < RoomWaypoint.Waypoints.Count; i++)
+            {
+                comingRooms.Enqueue(RoomWaypoint.Waypoints[Random.Range(0, RoomWaypoint.Waypoints.Count - i)]);
+            }
+        }
+
+        currentRoom = comingRooms.Dequeue(); //RoomWaypoint.Waypoints[Random.Range(0, RoomWaypoint.Waypoints.Count)];
+        comingRooms.Enqueue(currentRoom);
+
         NavMeshAgent.isStopped = false;
         if (!skipSubtitle)
             SubtitleUI.instance.ShowSubtitle(subtitleName, "Maybe somewhere else in the house", 3f);
