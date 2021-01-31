@@ -43,7 +43,7 @@ public class PlayerCamera : MonoBehaviour
             targetPosition = hit.point;
         }
 
-        transform.position = targetPosition;
+        transform.position = Vector3.Lerp(transform.position, targetPosition, 0.5f);
         LookAtTarget();
     }
 
