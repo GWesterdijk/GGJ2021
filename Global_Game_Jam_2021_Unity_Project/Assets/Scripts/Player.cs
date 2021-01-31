@@ -146,9 +146,9 @@ public class Player : MonoBehaviour
     {
         // Rotate model
         if (CharacterController.velocity.magnitude > 0.1f)
-            playerModel.rotation = Quaternion.LookRotation(velocity.normalized, Vector3.up);
+            playerModel.rotation = Quaternion.Lerp(playerModel.rotation, Quaternion.LookRotation(velocity.normalized, Vector3.up), 0.5f);
         if (isGrounded)
-            playerModel.rotation = Quaternion.Euler(0, playerModel.rotation.eulerAngles.y, playerModel.rotation.eulerAngles.z);
+            playerModel.rotation = Quaternion.Lerp(playerModel.rotation, Quaternion.Euler(0, playerModel.rotation.eulerAngles.y, playerModel.rotation.eulerAngles.z), 0.5f);
     }
 
     private void Jump()

@@ -399,7 +399,7 @@ MonoBehaviour:
   showtime: 5
   titleText: {fileID: 487611048731869816}
   scoreText: {fileID: 487611047870361907}
-  scoreTextPrefix: 'Earned:  '
+  scoreTextPrefix: 
   scoreTextPostfix: '  Chaos Points'
 --- !u!1 &487611047737485505
 GameObject:

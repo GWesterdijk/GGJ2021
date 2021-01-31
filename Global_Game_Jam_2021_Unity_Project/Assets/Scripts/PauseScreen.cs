@@ -8,6 +8,7 @@ public class PauseScreen : MonoBehaviour
 
     private void OnEnable()
     {
+        ChaosUI.instance.gameObject.SetActive(false);
 
         Cursor.lockState = CursorLockMode.None;
         if (LinkedCamera != null)
