@@ -52,7 +52,7 @@ public class Chaos : MonoBehaviour
     {
         // eat ass
         // Add chaos counter to total chaos meter
-        ChaosUI.instance.ShowEarnedChaos(ChaosTitle, ChaosScore);
+        ChaosUI.instance?.ShowEarnedChaos(ChaosTitle, ChaosScore);
         TotalChaosScore += ChaosScore;
 
         enabled = false;
