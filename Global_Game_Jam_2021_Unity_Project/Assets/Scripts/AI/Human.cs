@@ -62,6 +62,17 @@ public class Human : MonoBehaviour
     }
     public State CurrentState = State.Walking;
 
+    [SerializeField] private List<string> onHearingCatDialogue = new List<string>();
+    [SerializeField] private List<string> onWalkToNewRoomDialogue = new List<string>();
+    [SerializeField] private List<string> onStopAlertCatDialogue = new List<string>();
+    [SerializeField] private List<string> onStartSearchingRoomDialogue = new List<string>();
+    [SerializeField] private List<string> onStartRunningDialogue = new List<string>();
+
+    private string GetRandomDialogue(List<string> list)
+    {
+        return list[Random.Range(0, list.Count)];
+    }
+
     [SerializeField] private float walkingSpeed = 2;
     [SerializeField] private float runningSpeed = 3.5f;
 
@@ -237,7 +248,8 @@ public class Human : MonoBehaviour
     public void TriggerHearingCat(Vector3 position)
     {
         BecomeAlert(true, position);
-        SubtitleUI.instance.ShowSubtitle(subtitleName, "Hey! What was that?");
+        //onHearingCatDialogue
+        SubtitleUI.instance.ShowSubtitle(subtitleName, GetRandomDialogue(onHearingCatDialogue)); //"Hey! What was that?") ;
     }
 
     public void OnSpotCat()
@@ -334,8 +346,10 @@ public class Human : MonoBehaviour
         comingRooms.Enqueue(currentRoom);
 
         NavMeshAgent.isStopped = false;
+
+        //
         if (!skipSubtitle)
-            SubtitleUI.instance.ShowSubtitle(subtitleName, "Maybe somewhere else in the house", 3f);
+            SubtitleUI.instance.ShowSubtitle(subtitleName, GetRandomDialogue(onWalkToNewRoomDialogue), 3f);
         //NavMeshAgent.SetDestination(currentRoom.transform.position);
         NavMeshAgent.destination = currentRoom.transform.position;
         CurrentState = State.Walking;
@@ -344,7 +358,8 @@ public class Human : MonoBehaviour
 
     public void ContinueOnPath()
     {
-        SubtitleUI.instance.ShowSubtitle(subtitleName, "Huh, must have been the wind...", 3f);
+        //
+        SubtitleUI.instance.ShowSubtitle(subtitleName, GetRandomDialogue(onStopAlertCatDialogue), 3f);
 
         timer = 0;
         NavMeshAgent.isStopped = false;
@@ -361,7 +376,8 @@ public class Human : MonoBehaviour
     {
         NavMeshAgent.isStopped = true;
 
-        SubtitleUI.instance.ShowSubtitle(subtitleName, "Hmm must be here somewhere", 3f);
+        //
+        SubtitleUI.instance.ShowSubtitle(subtitleName, GetRandomDialogue(onStartSearchingRoomDialogue), 3f);
         // TODO: Play searching animation
         timer = currentRoom.WaitTime;
         CurrentState = State.Searching;
@@ -379,7 +395,8 @@ public class Human : MonoBehaviour
         if (CurrentState != State.Chasing)
         {
             timer = 0;
-            SubtitleUI.instance.ShowSubtitle(subtitleName, "I've got you now!", 3f);
+            //
+            SubtitleUI.instance.ShowSubtitle(subtitleName, GetRandomDialogue(onStartRunningDialogue), 3f);
         }
 
         CurrentState = State.Chasing;

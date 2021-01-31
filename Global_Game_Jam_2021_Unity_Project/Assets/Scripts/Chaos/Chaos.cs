@@ -63,7 +63,7 @@ public class Chaos : MonoBehaviour
 
         if (alertsPlayer)
         {
-            Human.instance.TriggerHearingCat(transform.position);
+            Human.instance?.TriggerHearingCat(transform.position);
         }
 
         if (AudioSource != null)
