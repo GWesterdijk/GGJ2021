@@ -17,18 +17,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    private Animator _animator;
-    public Animator Animator
-    {
-        get
-        {
-            if (_animator == null)
-                _animator = transform.GetChild(0).GetComponent<Animator>();
-
-            return _animator;
-        }
-    }
-
     private CharacterController _characterController;
     public CharacterController CharacterController
     {
@@ -139,16 +127,15 @@ public class Player : MonoBehaviour
 
         //Rigidbody.velocity = velocity;
         CharacterController.Move(velocity * Time.deltaTime);
-        Animator.SetFloat("Speed", CharacterController.velocity.magnitude);
     }
 
     private void LateUpdate()
     {
         // Rotate model
         if (CharacterController.velocity.magnitude > 0.1f)
-            playerModel.rotation = Quaternion.Lerp(playerModel.rotation, Quaternion.LookRotation(velocity.normalized, Vector3.up), 0.5f);
+            playerModel.rotation = Quaternion.LookRotation(velocity.normalized, Vector3.up);
         if (isGrounded)
-            playerModel.rotation = Quaternion.Lerp(playerModel.rotation, Quaternion.Euler(0, playerModel.rotation.eulerAngles.y, playerModel.rotation.eulerAngles.z), 0.5f);
+            playerModel.rotation = Quaternion.Euler(0, playerModel.rotation.eulerAngles.y, playerModel.rotation.eulerAngles.z);
     }
 
     private void Jump()

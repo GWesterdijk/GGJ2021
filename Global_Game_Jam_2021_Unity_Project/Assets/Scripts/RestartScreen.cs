@@ -6,33 +6,17 @@ using UnityEngine.SceneManagement;
 
 public class RestartScreen : MonoBehaviour
 {
-    public GameObject LinkedCamera;
-
     private void OnEnable()
     {
         SubtitleUI.instance.gameObject.SetActive(false);
         ChaosUI.instance.gameObject.SetActive(false);
-        Cursor.lockState = CursorLockMode.None;
-        if (LinkedCamera != null)
-        {
-            LinkedCamera.SetActive(true);
-        }
-    }
-    private void OnDisable()
-    {
-
-        Cursor.lockState = CursorLockMode.None;
-        if (LinkedCamera != null)
-        {
-            LinkedCamera.SetActive(false);
-        }
     }
 
     // Update is called once per frame
     void Update()
     {
         Time.timeScale = 0;
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetButtonUp("Jump"))
         {
             gameObject.SetActive(false);
             Time.timeScale = 1;
@@ -44,6 +28,5 @@ public class RestartScreen : MonoBehaviour
     public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        Cursor.lockState = CursorLockMode.Locked;
     }
 }
