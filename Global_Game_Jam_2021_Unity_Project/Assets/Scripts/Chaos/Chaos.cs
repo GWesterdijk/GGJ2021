@@ -65,8 +65,12 @@ public class Chaos : MonoBehaviour
         {
             Human.instance.TriggerHearingCat(transform.position);
         }
-        AudioSource.loop = false;
-        AudioSource.spatialBlend = 1;
-        AudioSource.Play();
+
+        if (AudioSource != null)
+        {
+            AudioSource.loop = false;
+            AudioSource.spatialBlend = 1;
+            AudioSource.Play();
+        }
     }
 }
